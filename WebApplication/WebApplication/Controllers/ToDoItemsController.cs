@@ -4,21 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication.Services.ToDoList;
 
 namespace WebApplication.Controllers
 {
-    public class ToDoItemControllers : Controller
+    public class ToDoItemsController : Controller
     {
+        private readonly IInMemoryToDoItemProvider inMemoryToDoItemProvider;
+
+        public ToDoItemsController(IInMemoryToDoItemProvider inMemoryToDoItemProvider)
+        {
+            this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
+        }
         // GET: ToDoItemController
         public ActionResult Index()
         {
-            return View();
+            return View(inMemoryToDoItemProvider.GetAll());
         }
 
         // GET: ToDoItemController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(inMemoryToDoItemProvider.Get(id));
         }
 
         // GET: ToDoItemController/Create

@@ -12,7 +12,7 @@ namespace WebApplication.Services.ToDoList
         static private List<ToDoItem> dataPile = new List<ToDoItem>()
         {
             new ToDoItem(){Id = 0, Name = "Clean Room", Description = "to clean room", Priority = 5},
-            new ToDoItem(){Id = 1, Name = "Homework", Description = "to do homeworks", Priority = 1}
+            new ToDoItem(){Id = 1, Name = "Homeworks", Description = "to do homeworks", Priority = 1}
         };
         public void Add(ToDoItem toDoItem)
         {
