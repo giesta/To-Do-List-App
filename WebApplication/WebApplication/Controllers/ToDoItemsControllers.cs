@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication.Controllers
 {
-    public class ToDoItemController : Controller
+    public class ToDoItemControllers : Controller
     {
         // GET: ToDoItemController
         public ActionResult Index()

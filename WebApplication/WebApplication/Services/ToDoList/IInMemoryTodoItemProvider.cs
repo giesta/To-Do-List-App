@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Services.ToDoList
 {
-    interface IInMemoryTodoItemProvider
+    interface IInMemoryToDoItemProvider
     {
     }
 }
