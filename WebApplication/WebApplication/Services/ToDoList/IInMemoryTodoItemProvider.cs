@@ -11,5 +11,7 @@ namespace WebApplication.Services.ToDoList
         List<ToDoItem> GetAll();
         ToDoItem Get(int id);
         void Add(ToDoItem toDoItem);
+        int GetIndexToInsert();
+        void Remove(ToDoItem toDoItem);
     }
 }

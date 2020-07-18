@@ -42,6 +42,7 @@ namespace WebApplication.Controllers
         {
             try
             {
+                toDoItem.Id = inMemoryToDoItemProvider.GetIndexToInsert();
                 inMemoryToDoItemProvider.Add(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
@@ -54,16 +55,19 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(inMemoryToDoItemProvider.Get(id));
         }
 
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ToDoItem toDoItem)
         {
             try
             {
+                inMemoryToDoItemProvider.Get(id).Name = toDoItem.Name;
+                inMemoryToDoItemProvider.Get(id).Description = toDoItem.Description;
+                inMemoryToDoItemProvider.Get(id).Priority = toDoItem.Priority;
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -75,16 +79,17 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(inMemoryToDoItemProvider.Get(id));
         }
 
         // POST: ToDoItemController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(ToDoItem toDoItem)
         {
             try
             {
+                inMemoryToDoItemProvider.Remove(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
