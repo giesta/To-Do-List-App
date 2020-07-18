@@ -26,6 +26,7 @@ namespace WebApplication
         {
             services.AddControllersWithViews();
             services.AddSingleton<IInMemoryToDoItemProvider, InMemoryToDoItemProvider>();
+            services.AddSingleton<IInMemoryCategoryProvider, InMemoryCategoryProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
