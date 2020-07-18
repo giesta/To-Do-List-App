@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication.Models;
 using WebApplication.Services.ToDoList;
 
 namespace WebApplication.Controllers
@@ -37,10 +38,11 @@ namespace WebApplication.Controllers
         // POST: ToDoItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ToDoItem toDoItem)
         {
             try
             {
+                inMemoryToDoItemProvider.Add(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
