@@ -25,7 +25,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<IInMemoryToDoItemProvider, InMemoryToDoItemProvider>();
+            services.AddSingleton<IInMemoryToDoItemProvider, InFileToDoItemProvider>();
             services.AddSingleton<IInMemoryCategoryProvider, InMemoryCategoryProvider>();
         }
 

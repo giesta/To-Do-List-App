@@ -65,9 +65,8 @@ namespace WebApplication.Controllers
         {
             try
             {
-                inMemoryToDoItemProvider.Get(id).Name = toDoItem.Name;
-                inMemoryToDoItemProvider.Get(id).Description = toDoItem.Description;
-                inMemoryToDoItemProvider.Get(id).Priority = toDoItem.Priority;
+                inMemoryToDoItemProvider.Remove(inMemoryToDoItemProvider.Get(id));
+                inMemoryToDoItemProvider.Add(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
