@@ -16,6 +16,16 @@ namespace WebApplication.Models
         [Range(1, 5)]
         [DefaultValue(3)]
         public int Priority { get; set; }
+  
+        public override bool Equals(object obj)
+        {
+            return obj is ToDoItem item &&
+                   Id == item.Id;
+        }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
     }
 }
