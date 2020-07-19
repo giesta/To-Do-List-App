@@ -1,0 +1,4 @@
+1;Administratorius
+2;Administratorius
+0;Rem
+3;Klien

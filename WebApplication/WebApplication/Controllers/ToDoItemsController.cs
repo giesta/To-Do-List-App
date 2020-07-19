@@ -11,9 +11,13 @@ namespace WebApplication.Controllers
 {
     public class ToDoItemsController : Controller
     {
-        private readonly IInMemoryToDoItemProvider inMemoryToDoItemProvider;
-
-        public ToDoItemsController(IInMemoryToDoItemProvider inMemoryToDoItemProvider)
+        //private readonly IToDoItemProvider inMemoryToDoItemProvider;
+        private readonly IGenericProvider<ToDoItem> inMemoryToDoItemProvider;
+        //public ToDoItemsController(IToDoItemProvider inMemoryToDoItemProvider)
+        //{
+        //    this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
+        //}
+        public ToDoItemsController(IGenericProvider<ToDoItem> inMemoryToDoItemProvider)
         {
             this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
         }
@@ -61,11 +65,11 @@ namespace WebApplication.Controllers
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ToDoItem toDoItem)
+        public ActionResult Edit(ToDoItem toDoItem)
         {
             try
             {
-                inMemoryToDoItemProvider.Remove(inMemoryToDoItemProvider.Get(id));
+                inMemoryToDoItemProvider.Remove(toDoItem);
                 inMemoryToDoItemProvider.Add(toDoItem);
                 return RedirectToAction(nameof(Index));
             }

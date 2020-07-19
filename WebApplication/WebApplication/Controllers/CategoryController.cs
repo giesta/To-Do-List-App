@@ -12,9 +12,14 @@ namespace WebApplication.Controllers
     public class CategoryController : Controller
     {
 
-        private readonly IInMemoryCategoryProvider inMemoryCategoryProvider;
+        //private readonly ICategoryProvider inMemoryCategoryProvider;
+        private readonly IGenericProvider<Category> inMemoryCategoryProvider;
 
-        public CategoryController(IInMemoryCategoryProvider inMemoryCategoryProvider)
+        //public CategoryController(ICategoryProvider inMemoryCategoryProvider)
+        //{
+        //    this.inMemoryCategoryProvider = inMemoryCategoryProvider;
+        //}
+        public CategoryController(IGenericProvider<Category> inMemoryCategoryProvider)
         {
             this.inMemoryCategoryProvider = inMemoryCategoryProvider;
         }
@@ -62,11 +67,12 @@ namespace WebApplication.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Category category)
+        public ActionResult Edit(Category category)
         {
             try
             {
-                inMemoryCategoryProvider.Get(id).Name = category.Name;
+                inMemoryCategoryProvider.Remove(category);
+                inMemoryCategoryProvider.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             catch

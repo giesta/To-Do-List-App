@@ -6,7 +6,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public interface IInMemoryCategoryProvider
+    public interface ICategoryProvider
     {
         List<Category> GetAll();
         Category Get(int id);

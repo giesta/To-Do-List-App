@@ -6,7 +6,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public interface IInMemoryToDoItemProvider
+    public interface IToDoItemProvider
     {
         List<ToDoItem> GetAll();
         ToDoItem Get(int id);

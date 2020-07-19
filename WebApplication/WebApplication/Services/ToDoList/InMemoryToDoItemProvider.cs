@@ -6,7 +6,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class InMemoryToDoItemProvider : IInMemoryToDoItemProvider
+    public class InMemoryToDoItemProvider : IToDoItemProvider
     {
 
         static private List<ToDoItem> dataPile = new List<ToDoItem>();
@@ -27,12 +27,39 @@ namespace WebApplication.Services.ToDoList
 
         public int GetIndexToInsert()
         {
-            return dataPile.Count();
+            return FindId();
         }
 
         public void Remove(ToDoItem toDoItem)
         {
             dataPile.Remove(toDoItem);
+        }
+        /// <summary>
+        /// Ensuring that ID attributes are unique
+        /// </summary>
+        /// <returns>Returns ID</returns>
+        private int FindId()
+        {            
+            int index = 0;
+            bool find;
+            for (int i = 0; i < dataPile.Count; i++)
+            {
+                find = true;
+                foreach (ToDoItem toDoItem in dataPile)
+                {
+                    if (index == toDoItem.Id)
+                    {
+                        index++;
+                        find = false;
+                        break;
+                    }
+                }
+                if (find)
+                {
+                    return index;
+                }
+            }
+            return index;
         }
     }
 }

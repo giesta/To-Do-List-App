@@ -1,7 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,42 +8,42 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class InFileToDoItemProvider : IToDoItemProvider
+    public class InFileCategoryProvider : ICategoryProvider
     {
-        private readonly string fileName = "toDoItem.txt";
-        
-        public void Add(ToDoItem toDoItem)
+        private readonly string fileName = "category.txt";
+        public void Add(Category category)
         {
-            WriteToFile(toDoItem);
+            WriteToFile(category);
         }
 
-        public ToDoItem Get(int id)
+        public Category Get(int id)
         {
             return GetFromFileById(id);
         }
 
-        public List<ToDoItem> GetAll()
+        public List<Category> GetAll()
         {
             return ReadFromFile();
         }
-
+        
         public int GetIndexToInsert()
-        {            
+        {
             return FindId();
         }
 
-        public void Remove(ToDoItem toDoItem)
+        public void Remove(Category category)
         {
-            RemoveFromFileById(toDoItem.Id);
+            RemoveFromFileById(category.Id);
         }
+
         /// <summary>
         /// Read all categories from the file
         /// </summary>
-        /// <returns>Returns list of ToDoItems</returns>
-        private List<ToDoItem> ReadFromFile()
+        /// <returns>Returns list of categories</returns>
+        private List<Category> ReadFromFile()
         {
             string[] lines;
-            var list = new List<ToDoItem>();
+            var list = new List<Category>();
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -53,7 +51,7 @@ namespace WebApplication.Services.ToDoList
                 while ((line = streamReader.ReadLine()) != null)
                 {
                     lines = line.Split(";");
-                    list.Add(new ToDoItem() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) });
+                    list.Add(new Category() { Id = Int16.Parse(lines[0]), Name = lines[1] });
                 }
             }
             return list;
@@ -64,15 +62,15 @@ namespace WebApplication.Services.ToDoList
         /// <returns>Returns ID</returns>
         private int FindId()
         {
-            List<ToDoItem> toDoItems = ReadFromFile();
+            List<Category> categories = ReadFromFile();
             int index = 0;
             bool find;
-            for (int i = 0; i < toDoItems.Count; i++)
+            for (int i = 0; i < categories.Count; i++)
             {
                 find = true;
-                foreach (ToDoItem toDoItem in toDoItems)
+                foreach (Category category in categories)
                 {
-                    if (index == toDoItem.Id)
+                    if (index == category.Id)
                     {
                         index++;
                         find = false;
@@ -87,19 +85,19 @@ namespace WebApplication.Services.ToDoList
             return index;
         }
         /// <summary>
-        /// Write a ToDoItem into the file
+        /// Write a category into the file
         /// </summary>
-        private void WriteToFile(ToDoItem toDoItem)
+        private void WriteToFile(Category category)
         {
             using (StreamWriter writer = new StreamWriter(fileName, true))
             {
-                writer.WriteLine(toDoItem.Id + ";" + toDoItem.Name + ";" + toDoItem.Description + ";" + toDoItem.Priority);
+                writer.WriteLine(category.Id + ";" + category.Name);
             }
         }
         /// <summary>
-        /// Rewrite data of the temp.txt file to the toDoItem.txt file
+        /// Rewrite data of the temp.txt file to the category.txt file
         /// </summary>
-        private void RewriteToFile()
+        private void RewriteFiles()
         {
             int count = 0;
             if (File.Exists("temp.txt"))
@@ -118,9 +116,7 @@ namespace WebApplication.Services.ToDoList
                             count++;
                         }
                     }
-
                 }
-
                 File.Delete("temp.txt");
             }
             if (count == 0)
@@ -131,17 +127,16 @@ namespace WebApplication.Services.ToDoList
                     count++;
                 }
             }
-
         }
         /// <summary>
-        /// Get a ToDoItem from the file by ID
+        /// Get a category from the file by ID
         /// </summary>
-        /// <param name="id">ToDoItem ID</param>
-        /// <returns>Returns a ToDoItem</returns>
-        private ToDoItem GetFromFileById(int id)
+        /// <param name="id">Category ID</param>
+        /// <returns>Returns a category</returns>
+        private Category GetFromFileById(int id)
         {
             string[] lines;
-            ToDoItem toDoItem = null;
+            Category category = null;
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -151,18 +146,18 @@ namespace WebApplication.Services.ToDoList
                     lines = line.Split(";");
                     if (Int16.Parse(lines[0]) == id)
                     {
-                        toDoItem = new ToDoItem() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) };
-                        return toDoItem;
+                        category = new Category() { Id = Int16.Parse(lines[0]), Name = lines[1] };
+                        return category;
                     }
 
                 }
             }
-            return toDoItem;
+            return category;
         }
         /// <summary>
-        /// Remove a ToDoItem from the file by ID
+        /// Remove a category from the file by ID
         /// </summary>
-        /// <param name="id"> ToDoItem ID</param>
+        /// <param name="id"> Category ID</param>
         private void RemoveFromFileById(int id)
         {
             string[] lines;
@@ -182,7 +177,7 @@ namespace WebApplication.Services.ToDoList
                     }
                 }
             }
-            RewriteToFile();
+            RewriteFiles();
         }
     }
 }
