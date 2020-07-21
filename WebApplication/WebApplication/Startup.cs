@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication.Models;
+using WebApplication.Services.ToDoList;
 
 namespace WebApplication
 {
@@ -24,6 +26,12 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddSingleton<IToDoItemProvider, InFileToDoItemProvider>();
+            //services.AddSingleton<ICategoryProvider, InFileCategoryProvider>();
+            //services.AddSingleton<IToDoItemProvider, InMemoryToDoItemProvider>();
+            //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
+            services.AddSingleton<IGenericProvider<Category>, InMemoryGenericProvider<Category>>();
+            services.AddSingleton<IGenericProvider<ToDoItem>, InMemoryGenericProvider<ToDoItem>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

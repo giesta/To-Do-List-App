@@ -1,0 +1,3 @@
+1;Klientas;to clean room;4
+0;Priėmėjas;to clean room;2
+2;Homeworks;to clean room;3

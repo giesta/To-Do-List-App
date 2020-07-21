@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebApplication.Models;
+
+namespace WebApplication.Services.ToDoList
+{
+    public class InMemoryToDoItemProvider : IToDoItemProvider
+    {
+
+        static private List<ToDoItem> dataPile = new List<ToDoItem>();
+        public void Add(ToDoItem toDoItem)
+        {
+            dataPile.Add(toDoItem);
+        }
+
+        public ToDoItem Get(int id)
+        {
+            return dataPile[id];
+        }
+
+        public List<ToDoItem> GetAll()
+        {
+            return dataPile;
+        }
+
+        public int GetIndexToInsert()
+        {
+            return FindId();
+        }
+
+        public void Remove(ToDoItem toDoItem)
+        {
+            dataPile.Remove(toDoItem);
+        }
+        /// <summary>
+        /// Ensuring that ID attributes are unique
+        /// </summary>
+        /// <returns>Returns ID</returns>
+        private int FindId()
+        {            
+            int index = 0;
+            bool find;
+            for (int i = 0; i < dataPile.Count; i++)
+            {
+                find = true;
+                foreach (ToDoItem toDoItem in dataPile)
+                {
+                    if (index == toDoItem.Id)
+                    {
+                        index++;
+                        find = false;
+                        break;
+                    }
+                }
+                if (find)
+                {
+                    return index;
+                }
+            }
+            return index;
+        }
+    }
+}
