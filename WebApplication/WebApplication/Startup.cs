@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Models;
 using WebApplication.Services.ToDoList;
+using Microsoft.EntityFrameworkCore;
+using WebApplication.Data;
 
 namespace WebApplication
 {
@@ -32,6 +34,10 @@ namespace WebApplication
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
             services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
             services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
+            services.AddScoped<IGenericProvider<Category>, CategoryEntityProvider>();
+
+            services.AddDbContext<WebApplicationContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

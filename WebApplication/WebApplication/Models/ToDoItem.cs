@@ -4,10 +4,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication.Services.ToDoList;
 
 namespace WebApplication.Models
 {
-    public class ToDoItem
+    public class ToDoItem : IHasId
     {
         public int Id { get; set; }
         public string Name { get; set; }

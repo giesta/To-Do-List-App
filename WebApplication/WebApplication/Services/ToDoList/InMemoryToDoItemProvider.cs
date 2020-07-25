@@ -12,6 +12,7 @@ namespace WebApplication.Services.ToDoList
         static private List<ToDoItem> dataPile = new List<ToDoItem>();
         public void Add(ToDoItem toDoItem)
         {
+            toDoItem.Id = GetUniqueId();
             dataPile.Add(toDoItem);
         }
 

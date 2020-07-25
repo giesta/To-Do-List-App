@@ -2,78 +2,78 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebApplication.Data;
 using WebApplication.Models;
-using WebApplication.Services.ToDoList;
 
 namespace WebApplication.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoriesBasicController : Controller
     {
+        private readonly WebApplicationContext _context;
 
-        //private readonly ICategoryProvider inMemoryCategoryProvider;
-        //private readonly IGenericProvider<Category> categoryProvider;
-        private readonly IGenericProvider<Category> categoryProvider;
-        //public CategoryController(ICategoryProvider inMemoryCategoryProvider)
-        //{
-        //    this.inMemoryCategoryProvider = inMemoryCategoryProvider;
-        //}
-        public CategoryController(IGenericProvider<Category> categoryProvider)
+        public CategoriesBasicController(WebApplicationContext context)
         {
-            this.categoryProvider = categoryProvider;
-        }
-        // GET: CategoryController
-        public ActionResult Index()
-        {
-            return View(categoryProvider.GetAll());
+            _context = context;
         }
 
-        // GET: CategoryController/Details/5
-        public async Task<IActionResult> Details(int id)
+        // GET: CategoriesBasic
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Category.ToListAsync());
+        }
+
+        // GET: CategoriesBasic/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await Task.Run(() => categoryProvider.Get(id));
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
-        // GET: CategoryController/Create
-        public ActionResult Create()
+        // GET: CategoriesBasic/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CategoryController/Create
+        // POST: CategoriesBasic/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
-             if (ModelState.IsValid)
-              {
-                    await Task.Run(()=>categoryProvider.Add(category));
-                    return RedirectToAction(nameof(Index));
-             }
+            if (ModelState.IsValid)
+            {
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
             return View(category);
         }
 
-        // GET: CategoryController/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        // GET: CategoriesBasic/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await Task.Run(()=> categoryProvider.Get(id));
+            var category = await _context.Category.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -81,7 +81,9 @@ namespace WebApplication.Controllers
             return View(category);
         }
 
-        // POST: CategoryController/Edit/5
+        // POST: CategoriesBasic/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
@@ -95,7 +97,8 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    await Task.Run(()=>categoryProvider.Update(category));
+                    _context.Update(category);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -113,15 +116,16 @@ namespace WebApplication.Controllers
             return View(category);
         }
 
-        // GET: CategoryController/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        // GET: CategoriesBasic/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await Task.Run(()=>categoryProvider.Get(id));
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -130,19 +134,20 @@ namespace WebApplication.Controllers
             return View(category);
         }
 
-        // POST: CategoryController/Delete/5
+        // POST: CategoriesBasic/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Category category)
-        {            
-            await Task.Run(()=>categoryProvider.Remove(category));
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         private bool CategoryExists(int id)
         {
-            if (categoryProvider.Get(id) == null)
-                return false;
-            return true;
+            return _context.Category.Any(e => e.Id == id);
         }
     }
 }

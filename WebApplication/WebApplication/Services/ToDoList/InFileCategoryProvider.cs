@@ -13,6 +13,7 @@ namespace WebApplication.Services.ToDoList
         private readonly string fileName = "category.txt";
         public void Add(Category category)
         {
+            category.Id = GetUniqueId();
             WriteToFile(category);
         }
 

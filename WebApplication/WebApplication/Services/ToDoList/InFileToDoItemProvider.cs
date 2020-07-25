@@ -16,6 +16,7 @@ namespace WebApplication.Services.ToDoList
         
         public void Add(ToDoItem toDoItem)
         {
+            toDoItem.Id = GetUniqueId();
             WriteToFile(toDoItem);
         }
 

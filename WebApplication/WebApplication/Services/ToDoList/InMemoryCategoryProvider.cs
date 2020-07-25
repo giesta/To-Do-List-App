@@ -11,6 +11,7 @@ namespace WebApplication.Services.ToDoList
         static private List<Category> dataPile = new List<Category>();
         public void Add(Category category)
         {
+            category.Id = GetUniqueId();
             dataPile.Add(category);
         }
 

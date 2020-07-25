@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class GenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue> where TypeOfValue : IHasId
+    public class GenericEntityProvider<TypeOfValue> : IGenericProvider<TypeOfValue>
     {
         static private List<TypeOfValue> dataPile = new List<TypeOfValue>();
         static private int counter = 0;
         public void Add(TypeOfValue type)
         {
-            type.Id = counter;
             dataPile.Add(type);
-            counter++;
         }
 
         public TypeOfValue Get(int id)
