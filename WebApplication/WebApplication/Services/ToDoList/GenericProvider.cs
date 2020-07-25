@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class InMemoryGenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue>
+    public class GenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue>
     {
         static private List<TypeOfValue> dataPile = new List<TypeOfValue>();
         static private int counter = 0;
@@ -34,6 +34,13 @@ namespace WebApplication.Services.ToDoList
         {
             dataPile.Remove(type);
         }
+
+        public void Update(TypeOfValue type)
+        {
+            dataPile.Remove(type);
+            dataPile.Add(type);
+        }
+
         /// <summary>
         /// Ensuring that ID attributes are unique
         /// </summary>

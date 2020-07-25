@@ -13,26 +13,26 @@ namespace WebApplication.Controllers
     {
 
         //private readonly ICategoryProvider inMemoryCategoryProvider;
-        private readonly IGenericProvider<Category> inMemoryCategoryProvider;
+        private readonly IGenericProvider<Category> categoryProvider;
 
         //public CategoryController(ICategoryProvider inMemoryCategoryProvider)
         //{
         //    this.inMemoryCategoryProvider = inMemoryCategoryProvider;
         //}
-        public CategoryController(IGenericProvider<Category> inMemoryCategoryProvider)
+        public CategoryController(IGenericProvider<Category> categoryProvider)
         {
-            this.inMemoryCategoryProvider = inMemoryCategoryProvider;
+            this.categoryProvider = categoryProvider;
         }
         // GET: CategoryController
         public ActionResult Index()
         {
-            return View(inMemoryCategoryProvider.GetAll());
+            return View(categoryProvider.GetAll());
         }
 
         // GET: CategoryController/Details/5
         public ActionResult Details(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            return View(categoryProvider.Get(id));
         }
 
         // GET: CategoryController/Create
@@ -48,20 +48,20 @@ namespace WebApplication.Controllers
         {
             try
             {
-                category.Id = inMemoryCategoryProvider.GetIndexToInsert();
-                inMemoryCategoryProvider.Add(category);
+                category.Id = categoryProvider.GetIndexToInsert();
+                categoryProvider.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(category);
             }
         }
 
         // GET: CategoryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            return View(categoryProvider.Get(id));
         }
 
         // POST: CategoryController/Edit/5
@@ -71,20 +71,19 @@ namespace WebApplication.Controllers
         {
             try
             {
-                inMemoryCategoryProvider.Remove(category);
-                inMemoryCategoryProvider.Add(category);
+                categoryProvider.Update(category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(category);
             }
         }
 
         // GET: CategoryController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            return View(categoryProvider.Get(id));
         }
 
         // POST: CategoryController/Delete/5
@@ -94,12 +93,12 @@ namespace WebApplication.Controllers
         {
             try
             {
-                inMemoryCategoryProvider.Remove(category);
+                categoryProvider.Remove(category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(category);
             }
         }
     }

@@ -26,18 +26,25 @@ namespace WebApplication.Services.ToDoList
 
         public int GetIndexToInsert()
         {
-            return FindId();
+            return GetUniqueId();
         }
 
         public void Remove(Category category)
         {
             dataPile.Remove(category);
         }
+
+        public void Update(Category category)
+        {
+            dataPile.Remove(category);
+            dataPile.Add(category);
+        }
+
         /// <summary>
-        /// Ensuring that ID attributes are unique
+        /// Get ID that is unique
         /// </summary>
         /// <returns>Returns ID</returns>
-        private int FindId()
+        private int GetUniqueId()
         {
             int index = 0;
             bool find;

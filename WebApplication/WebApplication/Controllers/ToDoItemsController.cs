@@ -12,25 +12,25 @@ namespace WebApplication.Controllers
     public class ToDoItemsController : Controller
     {
         //private readonly IToDoItemProvider inMemoryToDoItemProvider;
-        private readonly IGenericProvider<ToDoItem> inMemoryToDoItemProvider;
+        private readonly IGenericProvider<ToDoItem> toDoItemProvider;
         //public ToDoItemsController(IToDoItemProvider inMemoryToDoItemProvider)
         //{
         //    this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
         //}
-        public ToDoItemsController(IGenericProvider<ToDoItem> inMemoryToDoItemProvider)
+        public ToDoItemsController(IGenericProvider<ToDoItem> toDoItemProvider)
         {
-            this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
+            this.toDoItemProvider = toDoItemProvider;
         }
         // GET: ToDoItemController
         public ActionResult Index()
         {
-            return View(inMemoryToDoItemProvider.GetAll());
+            return View(toDoItemProvider.GetAll());
         }
 
         // GET: ToDoItemController/Details/5
         public ActionResult Details(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            return View(toDoItemProvider.Get(id));
         }
 
         // GET: ToDoItemController/Create
@@ -46,20 +46,20 @@ namespace WebApplication.Controllers
         {
             try
             {
-                toDoItem.Id = inMemoryToDoItemProvider.GetIndexToInsert();
-                inMemoryToDoItemProvider.Add(toDoItem);
+                toDoItem.Id = toDoItemProvider.GetIndexToInsert();
+                toDoItemProvider.Add(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(toDoItem);
             }
         }
 
         // GET: ToDoItemController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            return View(toDoItemProvider.Get(id));
         }
 
         // POST: ToDoItemController/Edit/5
@@ -68,21 +68,20 @@ namespace WebApplication.Controllers
         public ActionResult Edit(ToDoItem toDoItem)
         {
             try
-            {
-                inMemoryToDoItemProvider.Remove(toDoItem);
-                inMemoryToDoItemProvider.Add(toDoItem);
+            {                
+                toDoItemProvider.Update(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(toDoItem);
             }
         }
 
         // GET: ToDoItemController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            return View(toDoItemProvider.Get(id));
         }
 
         // POST: ToDoItemController/Delete/5
@@ -92,12 +91,12 @@ namespace WebApplication.Controllers
         {
             try
             {
-                inMemoryToDoItemProvider.Remove(toDoItem);
+                toDoItemProvider.Remove(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(toDoItem);
             }
         }
     }

@@ -12,5 +12,6 @@ namespace WebApplication.Services.ToDoList
         void Add(TypeOfValue type);
         int GetIndexToInsert();
         void Remove(TypeOfValue type);
+        void Update(TypeOfValue type);
     }
 }

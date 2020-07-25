@@ -30,8 +30,8 @@ namespace WebApplication
             //services.AddSingleton<ICategoryProvider, InFileCategoryProvider>();
             //services.AddSingleton<IToDoItemProvider, InMemoryToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
-            services.AddSingleton<IGenericProvider<Category>, InMemoryGenericProvider<Category>>();
-            services.AddSingleton<IGenericProvider<ToDoItem>, InMemoryGenericProvider<ToDoItem>>();
+            services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
+            services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
