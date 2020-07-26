@@ -27,10 +27,6 @@ namespace WebApplication.Services.ToDoList
             return dataPile;
         }
 
-        public int GetIndexToInsert()
-        {
-            return FindId();
-        }
 
         public void Remove(TypeOfValue type)
         {

@@ -25,19 +25,14 @@ namespace WebApplication.Controllers
             this.categoryProvider = categoryProvider;
         }
         // GET: CategoryController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(categoryProvider.GetAll());
+            return View(await Task.Run(()=>categoryProvider.GetAll()));
         }
 
         // GET: CategoryController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var category = await Task.Run(() => categoryProvider.Get(id));
             if (category == null)
             {
@@ -68,11 +63,6 @@ namespace WebApplication.Controllers
         // GET: CategoryController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var category = await Task.Run(()=> categoryProvider.Get(id));
             if (category == null)
             {
@@ -116,11 +106,6 @@ namespace WebApplication.Controllers
         // GET: CategoryController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var category = await Task.Run(()=>categoryProvider.Get(id));
             if (category == null)
             {

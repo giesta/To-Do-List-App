@@ -35,11 +35,6 @@ namespace WebApplication.Services.ToDoList
             return context.Category.ToList();
         }
 
-        public int GetIndexToInsert()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(Category category)
         {            
             context.Category.Remove(category);

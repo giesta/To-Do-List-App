@@ -32,10 +32,10 @@ namespace WebApplication
             //services.AddSingleton<ICategoryProvider, InFileCategoryProvider>();
             //services.AddSingleton<IToDoItemProvider, InMemoryToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
-            services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
-            services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
+            //services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
+            //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
             services.AddScoped<IGenericProvider<Category>, CategoryEntityProvider>();
-
+            services.AddScoped<IGenericProvider<ToDoItem>, ToDoItemEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }

@@ -10,7 +10,6 @@ namespace WebApplication.Services.ToDoList
         List<TypeOfValue> GetAll();
         TypeOfValue Get(int id);
         void Add(TypeOfValue type);
-        int GetIndexToInsert();
         void Remove(TypeOfValue type);
         void Update(TypeOfValue type);
     }

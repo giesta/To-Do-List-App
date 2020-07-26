@@ -16,5 +16,7 @@ namespace WebApplication.Data
 
         public DbSet<WebApplication.Models.Category> Category { get; set; }
         public object TypeOfValue { get; internal set; }
+      
+        public DbSet<WebApplication.Models.ToDoItem> ToDoItem { get; set; }
     }
 }
