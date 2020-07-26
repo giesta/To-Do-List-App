@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,14 +24,14 @@ namespace WebApplication.Services.ToDoList
 
         public ToDoItem Get(int id)
         {
-            ToDoItem toDoItem = context.ToDoItem
+            ToDoItem toDoItem = context.ToDoItem.Include(t=>t.Category)
                 .FirstOrDefault(m => m.Id == id);
             return toDoItem;
         }
 
         public List<ToDoItem> GetAll()
         {
-            return context.ToDoItem.ToList();
+            return context.ToDoItem.Include(t => t.Category).ToList();
         }
 
         public void Remove(ToDoItem toDoItem)

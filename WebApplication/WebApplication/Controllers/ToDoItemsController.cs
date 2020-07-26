@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Models;
 using WebApplication.Services.ToDoList;
@@ -14,13 +15,15 @@ namespace WebApplication.Controllers
     {
         //private readonly IToDoItemProvider inMemoryToDoItemProvider;
         private readonly IGenericProvider<ToDoItem> toDoItemProvider;
+        private IGenericProvider<Category> categoryProvider;
         //public ToDoItemsController(IToDoItemProvider inMemoryToDoItemProvider)
         //{
         //    this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
         //}
-        public ToDoItemsController(IGenericProvider<ToDoItem> toDoItemProvider)
+        public ToDoItemsController(IGenericProvider<ToDoItem> toDoItemProvider, IGenericProvider<Category> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;
+            this.categoryProvider = categoryProvider;
         }
         // GET: ToDoItemController
         public async Task<IActionResult> Index()
@@ -43,13 +46,14 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Create
         public ActionResult Create()
         {
+            ViewBag.Category = new SelectList(categoryProvider.GetAll(), "Id", "Name");
             return View();
         }
 
         // POST: ToDoItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItem toDoItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +66,7 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.Category = new SelectList(categoryProvider.GetAll(), "Id", "Name");
             var toDoItem = await Task.Run(() => toDoItemProvider.Get(id));
             if (toDoItem == null)
             {
@@ -73,7 +78,7 @@ namespace WebApplication.Controllers
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItem toDoItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
         {
             if (id != toDoItem.Id)
             {

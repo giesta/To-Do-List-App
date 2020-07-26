@@ -33,10 +33,15 @@ namespace WebApplication.Models
         [DefaultValue(3)]
         [Required]
         public int Priority { get; set; }
-
+        #nullable enable
+        [DefaultValue(null)]        
+        public int? CategoryID { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "Uncategorized")]
+        [DefaultValue(null)]
+        public virtual Category? Category { get; set; }
+        #nullable disable
         [DefaultValue("Backlog")]
-        public StatusName Status { get; set; }
-  
+        public StatusName Status { get; set; }        
         public override bool Equals(object obj)
         {
             return obj is ToDoItem item &&

@@ -35,6 +35,19 @@
             @Html.DisplayFor(model => model.DeadLineDate, "{0:dd/MM/yyyy}")
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Category != null)
+            {
+                @Html.DisplayFor(modelItem => Model.Category.Name)
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Category)
+            }
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Priority)
         </dt>
         <dd class="col-sm-10">
