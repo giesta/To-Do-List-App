@@ -28,16 +28,16 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<IGenericProvider<Category>>(new InFileGenericProvider<Category>("category.json"));
-            services.AddSingleton<IGenericProvider<ToDoItem>>(new InFileGenericProvider<ToDoItem>("toDoItem.json"));
+            //services.AddSingleton<IGenericProvider<Category>>(new InFileGenericProvider<Category>("category.json"));
+            //services.AddSingleton<IGenericProvider<ToDoItem>>(new InFileGenericProvider<ToDoItem>("toDoItem.json"));
             //services.AddSingleton<IToDoItemProvider, InFileToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InFileCategoryProvider>();
             //services.AddSingleton<IToDoItemProvider, InMemoryToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
             //services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
             //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
-            //services.AddScoped<IGenericProvider<Category>, CategoryEntityProvider>();
-            //services.AddScoped<IGenericProvider<ToDoItem>, ToDoItemEntityProvider>();
+            services.AddScoped<IGenericProvider<Category>, CategoryEntityProvider>();
+            services.AddScoped<IGenericProvider<ToDoItem>, ToDoItemEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }
