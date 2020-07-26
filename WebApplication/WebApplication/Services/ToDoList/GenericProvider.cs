@@ -10,7 +10,15 @@ namespace WebApplication.Services.ToDoList
     {
         static private List<TypeOfValue> dataPile = new List<TypeOfValue>();
         static private int counter = 0;
-        public void Add(TypeOfValue type)
+        public GenericProvider(List<TypeOfValue> initialData)
+        {
+            dataPile = initialData;
+        }
+
+        public GenericProvider() : this(new List<TypeOfValue>())
+        {
+        }
+        public virtual void Add(TypeOfValue type)
         {
             type.Id = counter;
             dataPile.Add(type);
@@ -28,12 +36,12 @@ namespace WebApplication.Services.ToDoList
         }
 
 
-        public void Remove(TypeOfValue type)
+        public virtual void Remove(TypeOfValue type)
         {
             dataPile.Remove(type);
         }
 
-        public void Update(TypeOfValue type)
+        public virtual void Update(TypeOfValue type)
         {
             dataPile.Remove(type);
             dataPile.Add(type);
