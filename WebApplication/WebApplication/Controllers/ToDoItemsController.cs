@@ -13,14 +13,10 @@ namespace WebApplication.Controllers
 {
     public class ToDoItemsController : Controller
     {
-        //private readonly IToDoItemProvider inMemoryToDoItemProvider;
-        private readonly IGenericProvider<ToDoItem> toDoItemProvider;
-        private IGenericProvider<Category> categoryProvider;
-        //public ToDoItemsController(IToDoItemProvider inMemoryToDoItemProvider)
-        //{
-        //    this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
-        //}
-        public ToDoItemsController(IGenericProvider<ToDoItem> toDoItemProvider, IGenericProvider<Category> categoryProvider)
+        
+        private readonly IGenericProviderAsync<ToDoItem> toDoItemProvider;
+        private IGenericProviderAsync<Category> categoryProvider;
+        public ToDoItemsController(IGenericProviderAsync<ToDoItem> toDoItemProvider, IGenericProviderAsync<Category> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;
             this.categoryProvider = categoryProvider;
@@ -28,13 +24,13 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController
         public async Task<IActionResult> Index()
         {
-            return View(await Task.Run(() => toDoItemProvider.GetAll()));
+            return View(await toDoItemProvider.GetAllAsync());
         }
 
         // GET: ToDoItemController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var toDoItem = await Task.Run(() => toDoItemProvider.Get(id));
+            var toDoItem = await toDoItemProvider.GetAsync(id);
             if (toDoItem == null)
             {
                 return NotFound();
@@ -44,9 +40,9 @@ namespace WebApplication.Controllers
 
 
         // GET: ToDoItemController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.Category = new SelectList(categoryProvider.GetAll(), "Id", "Name");
+            ViewBag.Category = new SelectList(await categoryProvider.GetAllAsync(), "Id", "Name");
             return View();
         }
 
@@ -57,7 +53,7 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                await Task.Run(() => toDoItemProvider.Add(toDoItem));
+                await toDoItemProvider.AddAsync(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
             return View(toDoItem);
@@ -66,8 +62,8 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            ViewBag.Category = new SelectList(categoryProvider.GetAll(), "Id", "Name");
-            var toDoItem = await Task.Run(() => toDoItemProvider.Get(id));
+            ViewBag.Category = new SelectList(await categoryProvider.GetAllAsync(), "Id", "Name");
+            var toDoItem = await toDoItemProvider.GetAsync(id);
             if (toDoItem == null)
             {
                 return NotFound();
@@ -89,7 +85,7 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    await Task.Run(() => toDoItemProvider.Update(toDoItem));
+                    await toDoItemProvider.UpdateAsync(toDoItem);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -110,7 +106,7 @@ namespace WebApplication.Controllers
         // GET: ToDoItemController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var toDoItem = await Task.Run(() => toDoItemProvider.Get(id));
+            var toDoItem = await toDoItemProvider.GetAsync(id);
             if (toDoItem == null)
             {
                 return NotFound();
@@ -124,12 +120,12 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(ToDoItem toDoItem)
         {
-            await Task.Run(() => toDoItemProvider.Remove(toDoItem));
+            await toDoItemProvider.RemoveAsync(toDoItem);
             return RedirectToAction(nameof(Index));
         }
         private bool ToDoItemExists(int id)
         {
-            if (toDoItemProvider.Get(id) == null)
+            if (toDoItemProvider.GetAsync(id) == null)
                 return false;
             return true;
         }

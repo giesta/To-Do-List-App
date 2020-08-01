@@ -8,43 +8,40 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class CategoryEntityProvider : IGenericProvider<Category> 
+    public class CategoryEntityProvider : IGenericProviderAsync<Category> 
     {
         private readonly WebApplicationContext context;
 
-        public CategoryEntityProvider(WebApplicationContext context) : base()
+        public CategoryEntityProvider(WebApplicationContext context)
         {
             this.context = context;
         }
-
-        public void Add(Category category)
+        public async Task AddAsync(Category category)
         {
             context.Add(category);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public Category Get(int id)
+        public async Task<Category> GetAsync(int id)
         {
-            Category category = context.Category
-                .FirstOrDefault(m => m.Id == id);
-            return category;
+            return await context.Category.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
-            return context.Category.ToList();
+            return await context.Category.ToListAsync();
         }
 
-        public void Remove(Category category)
-        {            
+        public async Task RemoveAsync(Category category)
+        {
             context.Category.Remove(category);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void Update(Category category)
+        public async Task UpdateAsync(Category category)
         {
             context.Update(category);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -12,28 +12,21 @@ namespace WebApplication.Controllers
 {
     public class CategoryController : Controller
     {
-
-        //private readonly ICategoryProvider inMemoryCategoryProvider;
-        //private readonly IGenericProvider<Category> categoryProvider;
-        private readonly IGenericProvider<Category> categoryProvider;
-        //public CategoryController(ICategoryProvider inMemoryCategoryProvider)
-        //{
-        //    this.inMemoryCategoryProvider = inMemoryCategoryProvider;
-        //}
-        public CategoryController(IGenericProvider<Category> categoryProvider)
+        private readonly IGenericProviderAsync<Category> categoryProvider;
+        public CategoryController(IGenericProviderAsync<Category> categoryProvider)
         {
             this.categoryProvider = categoryProvider;
         }
         // GET: CategoryController
         public async Task<IActionResult> Index()
         {
-            return View(await Task.Run(()=>categoryProvider.GetAll()));
+            return View(await categoryProvider.GetAllAsync());
         }
 
         // GET: CategoryController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var category = await Task.Run(() => categoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -54,7 +47,7 @@ namespace WebApplication.Controllers
         {
              if (ModelState.IsValid)
               {
-                    await Task.Run(()=>categoryProvider.Add(category));
+                    await categoryProvider.AddAsync(category);
                     return RedirectToAction(nameof(Index));
              }
             return View(category);
@@ -63,7 +56,7 @@ namespace WebApplication.Controllers
         // GET: CategoryController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var category = await Task.Run(()=> categoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -85,7 +78,7 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    await Task.Run(()=>categoryProvider.Update(category));
+                    await categoryProvider.UpdateAsync(category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -106,7 +99,7 @@ namespace WebApplication.Controllers
         // GET: CategoryController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var category = await Task.Run(()=>categoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -120,12 +113,12 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Category category)
         {            
-            await Task.Run(()=>categoryProvider.Remove(category));
+            await categoryProvider.RemoveAsync(category);
             return RedirectToAction(nameof(Index));
         }
         private bool CategoryExists(int id)
         {
-            if (categoryProvider.Get(id) == null)
+            if (categoryProvider.GetAsync(id) == null)
                 return false;
             return true;
         }
