@@ -12,6 +12,7 @@ namespace WebApplication.Services.ToDoList
         static private List<ToDoItem> dataPile = new List<ToDoItem>();
         public void Add(ToDoItem toDoItem)
         {
+            toDoItem.Id = GetUniqueId();
             dataPile.Add(toDoItem);
         }
 
@@ -27,18 +28,25 @@ namespace WebApplication.Services.ToDoList
 
         public int GetIndexToInsert()
         {
-            return FindId();
+            return GetUniqueId();
         }
 
         public void Remove(ToDoItem toDoItem)
         {
             dataPile.Remove(toDoItem);
         }
+
+        public void Update(ToDoItem toDoItem)
+        {
+            dataPile.Remove(toDoItem);
+            dataPile.Add(toDoItem);
+        }
+
         /// <summary>
-        /// Ensuring that ID attributes are unique
+        /// Get ID that is unique
         /// </summary>
         /// <returns>Returns ID</returns>
-        private int FindId()
+        private int GetUniqueId()
         {            
             int index = 0;
             bool find;

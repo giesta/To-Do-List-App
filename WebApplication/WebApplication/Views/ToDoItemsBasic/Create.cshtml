@@ -23,16 +23,14 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DeadLineDate" class="control-label"></label>
                 <input asp-for="DeadLineDate" class="form-control" />
                 <span asp-validation-for="DeadLineDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="CategoryID" asp-items="@((SelectList)ViewBag.Category)" class="form-control">
-                    <option value="">Uncategorized</option>
-                </select>
-                <span asp-validation-for="CategoryID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
@@ -41,8 +39,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" asp-items="@Html.GetEnumSelectList<StatusName>()" class="form-control">
-                </select>
+                <select asp-for="Status" asp-items="@Html.GetEnumSelectList<StatusName>()" class="form-control"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">

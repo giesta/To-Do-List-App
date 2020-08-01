@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApplication.Models;
 using WebApplication.Services.ToDoList;
+using Microsoft.EntityFrameworkCore;
+using WebApplication.Data;
 
 namespace WebApplication
 {
@@ -26,12 +28,18 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddSingleton<IGenericProvider<Category>>(new InFileGenericProvider<Category>("category.json"));
+            //services.AddSingleton<IGenericProvider<ToDoItem>>(new InFileGenericProvider<ToDoItem>("toDoItem.json"));
             //services.AddSingleton<IToDoItemProvider, InFileToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InFileCategoryProvider>();
             //services.AddSingleton<IToDoItemProvider, InMemoryToDoItemProvider>();
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
-            services.AddSingleton<IGenericProvider<Category>, InMemoryGenericProvider<Category>>();
-            services.AddSingleton<IGenericProvider<ToDoItem>, InMemoryGenericProvider<ToDoItem>>();
+            //services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
+            //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
+            services.AddTransient<IGenericProviderAsync<Category>, CategoryEntityProvider>();
+            services.AddTransient<IGenericProviderAsync<ToDoItem>, ToDoItemEntityProvider>();
+            services.AddDbContext<WebApplicationContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

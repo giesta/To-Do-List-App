@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebApplication.Models;
 using WebApplication.Services.ToDoList;
 
@@ -11,94 +13,121 @@ namespace WebApplication.Controllers
 {
     public class ToDoItemsController : Controller
     {
-        //private readonly IToDoItemProvider inMemoryToDoItemProvider;
-        private readonly IGenericProvider<ToDoItem> inMemoryToDoItemProvider;
-        //public ToDoItemsController(IToDoItemProvider inMemoryToDoItemProvider)
-        //{
-        //    this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
-        //}
-        public ToDoItemsController(IGenericProvider<ToDoItem> inMemoryToDoItemProvider)
+        
+        private readonly IGenericProviderAsync<ToDoItem> toDoItemProvider;
+        private IGenericProviderAsync<Category> categoryProvider;
+        public ToDoItemsController(IGenericProviderAsync<ToDoItem> toDoItemProvider, IGenericProviderAsync<Category> categoryProvider)
         {
-            this.inMemoryToDoItemProvider = inMemoryToDoItemProvider;
+            this.toDoItemProvider = toDoItemProvider;
+            this.categoryProvider = categoryProvider;
         }
         // GET: ToDoItemController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(inMemoryToDoItemProvider.GetAll());
+            return View(await toDoItemProvider.GetAllAsync());
         }
 
         // GET: ToDoItemController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            var toDoItem = await toDoItemProvider.GetAsync(id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+            return View(toDoItem);
         }
 
+
         // GET: ToDoItemController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.Category = new SelectList(await categoryProvider.GetAllAsync(), "Id", "Name");
             return View();
         }
 
         // POST: ToDoItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ToDoItem toDoItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
         {
-            try
+            if (ModelState.IsValid)
             {
-                toDoItem.Id = inMemoryToDoItemProvider.GetIndexToInsert();
-                inMemoryToDoItemProvider.Add(toDoItem);
+                await toDoItemProvider.AddAsync(toDoItem);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(toDoItem);
         }
 
         // GET: ToDoItemController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            ViewBag.Category = new SelectList(await categoryProvider.GetAllAsync(), "Id", "Name");
+            var toDoItem = await toDoItemProvider.GetAsync(id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+            return View(toDoItem);
         }
 
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ToDoItem toDoItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
         {
-            try
+            if (id != toDoItem.Id)
             {
-                inMemoryToDoItemProvider.Remove(toDoItem);
-                inMemoryToDoItemProvider.Add(toDoItem);
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await toDoItemProvider.UpdateAsync(toDoItem);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ToDoItemExists(toDoItem.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(toDoItem);
         }
 
         // GET: ToDoItemController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View(inMemoryToDoItemProvider.Get(id));
+            var toDoItem = await toDoItemProvider.GetAsync(id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(toDoItem);
         }
 
         // POST: ToDoItemController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(ToDoItem toDoItem)
+        public async Task<IActionResult> DeleteConfirmed(ToDoItem toDoItem)
         {
-            try
-            {
-                inMemoryToDoItemProvider.Remove(toDoItem);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await toDoItemProvider.RemoveAsync(toDoItem);
+            return RedirectToAction(nameof(Index));
+        }
+        private bool ToDoItemExists(int id)
+        {
+            if (toDoItemProvider.GetAsync(id) == null)
+                return false;
+            return true;
         }
     }
 }

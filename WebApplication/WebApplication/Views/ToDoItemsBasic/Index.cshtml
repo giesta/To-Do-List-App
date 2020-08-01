@@ -37,8 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -53,14 +52,7 @@
                 @Html.DisplayFor(modelItem => item.DeadLineDate)
             </td>
             <td>
-                @if (item.Category != null)
-                {
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.Category)
-                }
+                @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Priority)
@@ -74,6 +66,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-        }
+}
     </tbody>
 </table>

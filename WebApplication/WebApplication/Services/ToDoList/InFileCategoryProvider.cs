@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApplication.Models;
+using Newtonsoft.Json;
 
 namespace WebApplication.Services.ToDoList
 {
@@ -13,6 +14,7 @@ namespace WebApplication.Services.ToDoList
         private readonly string fileName = "category.txt";
         public void Add(Category category)
         {
+            category.Id = GetUniqueId();
             WriteToFile(category);
         }
 
@@ -28,7 +30,7 @@ namespace WebApplication.Services.ToDoList
         
         public int GetIndexToInsert()
         {
-            return FindId();
+            return GetUniqueId();
         }
 
         public void Remove(Category category)
@@ -57,10 +59,10 @@ namespace WebApplication.Services.ToDoList
             return list;
         }
         /// <summary>
-        /// Ensuring that ID attributes are unique
+        /// Get ID that is unique
         /// </summary>
         /// <returns>Returns ID</returns>
-        private int FindId()
+        private int GetUniqueId()
         {
             List<Category> categories = ReadFromFile();
             int index = 0;
@@ -178,6 +180,12 @@ namespace WebApplication.Services.ToDoList
                 }
             }
             RewriteFiles();
+        }
+
+        public void Update(Category category)
+        {
+            RemoveFromFileById(category.Id);
+            WriteToFile(category);
         }
     }
 }

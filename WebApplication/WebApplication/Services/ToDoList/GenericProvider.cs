@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class InMemoryGenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue>
+    public class GenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue> where TypeOfValue : IHasId
     {
         static private List<TypeOfValue> dataPile = new List<TypeOfValue>();
         static private int counter = 0;
-        public void Add(TypeOfValue type)
+        public GenericProvider(List<TypeOfValue> initialData)
         {
+            dataPile = initialData;
+        }
+
+        public GenericProvider() : this(new List<TypeOfValue>())
+        {
+        }
+        public virtual void Add(TypeOfValue type)
+        {
+            type.Id = counter;
             dataPile.Add(type);
+            counter++;
         }
 
         public TypeOfValue Get(int id)
@@ -25,15 +35,18 @@ namespace WebApplication.Services.ToDoList
             return dataPile;
         }
 
-        public int GetIndexToInsert()
-        {
-            return FindId();
-        }
 
-        public void Remove(TypeOfValue type)
+        public virtual void Remove(TypeOfValue type)
         {
             dataPile.Remove(type);
         }
+
+        public virtual void Update(TypeOfValue type)
+        {
+            dataPile.Remove(type);
+            dataPile.Add(type);
+        }
+
         /// <summary>
         /// Ensuring that ID attributes are unique
         /// </summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication.Models;
 using WebApplication.Services.ToDoList;
 
@@ -11,28 +12,26 @@ namespace WebApplication.Controllers
 {
     public class CategoryController : Controller
     {
-
-        //private readonly ICategoryProvider inMemoryCategoryProvider;
-        private readonly IGenericProvider<Category> inMemoryCategoryProvider;
-
-        //public CategoryController(ICategoryProvider inMemoryCategoryProvider)
-        //{
-        //    this.inMemoryCategoryProvider = inMemoryCategoryProvider;
-        //}
-        public CategoryController(IGenericProvider<Category> inMemoryCategoryProvider)
+        private readonly IGenericProviderAsync<Category> categoryProvider;
+        public CategoryController(IGenericProviderAsync<Category> categoryProvider)
         {
-            this.inMemoryCategoryProvider = inMemoryCategoryProvider;
+            this.categoryProvider = categoryProvider;
         }
         // GET: CategoryController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(inMemoryCategoryProvider.GetAll());
+            return View(await categoryProvider.GetAllAsync());
         }
 
         // GET: CategoryController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
 
         // GET: CategoryController/Create
@@ -44,63 +43,84 @@ namespace WebApplication.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
-            try
-            {
-                category.Id = inMemoryCategoryProvider.GetIndexToInsert();
-                inMemoryCategoryProvider.Add(category);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+             if (ModelState.IsValid)
+              {
+                    await categoryProvider.AddAsync(category);
+                    return RedirectToAction(nameof(Index));
+             }
+            return View(category);
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
         {
-            try
+            if (id != category.Id)
             {
-                inMemoryCategoryProvider.Remove(category);
-                inMemoryCategoryProvider.Add(category);
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await categoryProvider.UpdateAsync(category);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CategoryExists(category.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(category);
         }
 
         // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View(inMemoryCategoryProvider.Get(id));
+            var category = await categoryProvider.GetAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
         }
 
         // POST: CategoryController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Category category)
+        public async Task<IActionResult> DeleteConfirmed(Category category)
+        {            
+            await categoryProvider.RemoveAsync(category);
+            return RedirectToAction(nameof(Index));
+        }
+        private bool CategoryExists(int id)
         {
-            try
-            {
-                inMemoryCategoryProvider.Remove(category);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (categoryProvider.GetAsync(id) == null)
+                return false;
+            return true;
         }
     }
 }

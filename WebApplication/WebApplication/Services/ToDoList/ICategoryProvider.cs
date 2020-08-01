@@ -13,5 +13,6 @@ namespace WebApplication.Services.ToDoList
         void Add(Category category);
         int GetIndexToInsert();
         void Remove(Category category);
+        void Update(Category category);
     }
 }

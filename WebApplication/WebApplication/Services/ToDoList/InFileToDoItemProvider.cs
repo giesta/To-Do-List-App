@@ -16,6 +16,7 @@ namespace WebApplication.Services.ToDoList
         
         public void Add(ToDoItem toDoItem)
         {
+            toDoItem.Id = GetUniqueId();
             WriteToFile(toDoItem);
         }
 
@@ -31,7 +32,7 @@ namespace WebApplication.Services.ToDoList
 
         public int GetIndexToInsert()
         {            
-            return FindId();
+            return GetUniqueId();
         }
 
         public void Remove(ToDoItem toDoItem)
@@ -59,10 +60,10 @@ namespace WebApplication.Services.ToDoList
             return list;
         }
         /// <summary>
-        /// Ensuring that ID attributes are unique
+        /// Get ID that is unique
         /// </summary>
         /// <returns>Returns ID</returns>
-        private int FindId()
+        private int GetUniqueId()
         {
             List<ToDoItem> toDoItems = ReadFromFile();
             int index = 0;
@@ -183,6 +184,12 @@ namespace WebApplication.Services.ToDoList
                 }
             }
             RewriteToFile();
+        }
+
+        public void Update(ToDoItem toDoItem)
+        {
+            RemoveFromFileById(toDoItem.Id);
+            WriteToFile(toDoItem);
         }
     }
 }
