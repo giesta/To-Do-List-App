@@ -12,8 +12,8 @@ namespace WebApplication.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IGenericProviderAsync<Category> categoryProvider;
-        public CategoryController(IGenericProviderAsync<Category> categoryProvider)
+        private readonly IProviderAsync<Category> categoryProvider;
+        public CategoryController(IProviderAsync<Category> categoryProvider)
         {
             this.categoryProvider = categoryProvider;
         }
@@ -112,9 +112,17 @@ namespace WebApplication.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Category category)
-        {            
-            await categoryProvider.RemoveAsync(category);
-            return RedirectToAction(nameof(Index));
+        {
+            try
+            {
+                await categoryProvider.RemoveAsync(category);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(category);
+            }
+            
         }
         private bool CategoryExists(int id)
         {

@@ -41,7 +41,9 @@ namespace WebApplication.Models
         public virtual Category? Category { get; set; }
         #nullable disable
         [DefaultValue("Backlog")]
-        public StatusName Status { get; set; }        
+        public StatusName Status { get; set; }
+
+        public IList<TagToDoItem> TagToDoItems { get; set; }
         public override bool Equals(object obj)
         {
             return obj is ToDoItem item &&

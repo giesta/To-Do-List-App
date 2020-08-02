@@ -8,7 +8,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class CategoryEntityProvider : IGenericProviderAsync<Category> 
+    public class CategoryEntityProvider : IProviderAsync<Category> 
     {
         private readonly WebApplicationContext context;
 
