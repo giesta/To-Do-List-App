@@ -38,6 +38,7 @@ namespace WebApplication
             //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
             services.AddTransient<IProviderAsync<Category>, CategoryEntityProvider>();
             services.AddTransient<IProviderAsync<ToDoItem>, ToDoItemEntityProvider>();
+            services.AddTransient<IProviderAsync<Tag>, TagEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }

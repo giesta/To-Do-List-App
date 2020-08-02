@@ -15,7 +15,7 @@ namespace WebApplication.Controllers
     {
         
         private readonly IProviderAsync<ToDoItem> toDoItemProvider;
-        private IProviderAsync<Category> categoryProvider;
+        private readonly IProviderAsync<Category> categoryProvider;
         public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<Category> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;

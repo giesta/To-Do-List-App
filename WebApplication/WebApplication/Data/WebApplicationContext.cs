@@ -18,5 +18,13 @@ namespace WebApplication.Data
         public object TypeOfValue { get; internal set; }
       
         public DbSet<WebApplication.Models.ToDoItem> ToDoItem { get; set; }
+        public DbSet<WebApplication.Models.Tag> Tag { get; set; }
+        public DbSet<WebApplication.Models.TagToDoItem> TagToDoItem { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TagToDoItem>()
+                .HasKey(cs => new { cs.TagId, cs.ToDoItemId });
+        }
     }
 }
