@@ -25,6 +25,17 @@ namespace WebApplication.Data
         {
             modelBuilder.Entity<TagToDoItem>()
                 .HasKey(cs => new { cs.TagId, cs.ToDoItemId });
+            modelBuilder.Entity<TagToDoItem>()
+            .HasOne<Tag>(sc => sc.Tag)
+            .WithMany(s => s.TagToDoItems)
+            .HasForeignKey(sc => sc.TagId);
+
+
+            modelBuilder.Entity<TagToDoItem>()
+            .HasOne<ToDoItem>(sc => sc.ToDoItem)
+            .WithMany(s => s.TagToDoItems)
+            .HasForeignKey(sc => sc.ToDoItemId);
         }
+        
     }
 }
