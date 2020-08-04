@@ -15,7 +15,7 @@ namespace WebApplication.Controllers
     {
         private readonly IProviderAsync<Tag> tagProvider;
         private readonly IProviderAsync<ToDoItem> toDoItemProvider;
-        public TagsController(IProviderAsync<Tag> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider)
+        public TagsController(IProviderAsync<Tag> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider, WebApplicationContext context)
         {
             this.tagProvider = tagProvider;
             this.toDoItemProvider = toDoItemProvider;
@@ -41,7 +41,7 @@ namespace WebApplication.Controllers
         // GET: Tags/Create
         public async Task <IActionResult> Create()
         {
-            ViewBag.ToDoItems = new SelectList(await toDoItemProvider.GetAllAsync(), "Id", "Name");
+            ViewBag.ToDoItems = new MultiSelectList(await toDoItemProvider.GetAllAsync(), "Id", "Name");
             return View();
         }
 
@@ -50,11 +50,18 @@ namespace WebApplication.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(Tag tag, int[] ToDoItems)
         {
-
+            tag.TagToDoItems = new List<TagToDoItem>();
+            
             if (ModelState.IsValid)
             {
+                foreach (var toDoItemID in ToDoItems)
+                {
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
+                    tag.TagToDoItems.Add(tagToDoItem);
+                }
+
                 await tagProvider.AddAsync(tag);
                 return RedirectToAction(nameof(Index));
             }
@@ -64,13 +71,15 @@ namespace WebApplication.Controllers
         // GET: Tags/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            ViewBag.ToDoItems = new SelectList(await toDoItemProvider.GetAllAsync(), "Id", "Name");
-            var category = await tagProvider.GetAsync(id);
-            if (category == null)
+            var tag = await tagProvider.GetAsync(id);
+            List<int> selectedToDoItems = (await tagProvider.GetAsync(id)).TagToDoItems.Where(m => m.TagId == tag.Id).Select(a => a.ToDoItemId).ToList();
+            ViewBag.ToDoItems = new MultiSelectList(await toDoItemProvider.GetAllAsync(), "Id", "Name", selectedToDoItems);
+            
+            if (tag == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(tag);
         }
 
         // POST: Tags/Edit/5
@@ -78,15 +87,22 @@ namespace WebApplication.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Tag tag)
+        public async Task<IActionResult> Edit(int id, Tag tag, int[] ToDoItems)
         {
             if (id != tag.Id)
             {
                 return NotFound();
             }
-
+            
+            tag.TagToDoItems = new List<TagToDoItem>();
+            await tagProvider.UpdateAsync(tag);
             if (ModelState.IsValid)
             {
+                foreach (var toDoItemID in ToDoItems)
+                {
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
+                    tag.TagToDoItems.Add(tagToDoItem);
+                }
                 try
                 {
                     await tagProvider.UpdateAsync(tag);
