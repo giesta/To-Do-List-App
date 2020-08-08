@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class InFileGenericProvider<TypeOfValue>:GenericProvider<TypeOfValue> where TypeOfValue:IHasId
+    public class InFileProvider<TypeOfValue>:Provider<TypeOfValue> where TypeOfValue:IHasId
     {
         private readonly string fileName;
 
-        public InFileGenericProvider(string fileName) : base(ReadFile(fileName))
+        public InFileProvider(string fileName) : base(ReadFile(fileName))
         {
             this.fileName = fileName;
         }

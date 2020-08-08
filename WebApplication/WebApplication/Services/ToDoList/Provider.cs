@@ -6,42 +6,42 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Services.ToDoList
 {
-    public class GenericProvider<TypeOfValue> : IGenericProvider<TypeOfValue> where TypeOfValue : IHasId
+    public class Provider<TValue> : IProvider<TValue> where TValue : IHasId
     {
-        static private List<TypeOfValue> dataPile = new List<TypeOfValue>();
+        static private List<TValue> dataPile = new List<TValue>();
         static private int counter = 0;
-        public GenericProvider(List<TypeOfValue> initialData)
+        public Provider(List<TValue> initialData)
         {
             dataPile = initialData;
         }
 
-        public GenericProvider() : this(new List<TypeOfValue>())
+        public Provider() : this(new List<TValue>())
         {
         }
-        public virtual void Add(TypeOfValue type)
+        public virtual void Add(TValue type)
         {
             type.Id = counter;
             dataPile.Add(type);
             counter++;
         }
 
-        public TypeOfValue Get(int id)
+        public TValue Get(int id)
         {
             return dataPile[id];
         }
 
-        public List<TypeOfValue> GetAll()
+        public List<TValue> GetAll()
         {
             return dataPile;
         }
 
 
-        public virtual void Remove(TypeOfValue type)
+        public virtual void Remove(TValue type)
         {
             dataPile.Remove(type);
         }
 
-        public virtual void Update(TypeOfValue type)
+        public virtual void Update(TValue type)
         {
             dataPile.Remove(type);
             dataPile.Add(type);

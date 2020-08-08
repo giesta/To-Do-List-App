@@ -14,9 +14,9 @@ namespace WebApplication.Controllers
     public class ToDoItemsController : Controller
     {
         
-        private readonly IGenericProviderAsync<ToDoItem> toDoItemProvider;
-        private IGenericProviderAsync<Category> categoryProvider;
-        public ToDoItemsController(IGenericProviderAsync<ToDoItem> toDoItemProvider, IGenericProviderAsync<Category> categoryProvider)
+        private readonly IProviderAsync<ToDoItem> toDoItemProvider;
+        private readonly IProviderAsync<Category> categoryProvider;
+        public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<Category> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;
             this.categoryProvider = categoryProvider;
@@ -120,8 +120,16 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(ToDoItem toDoItem)
         {
-            await toDoItemProvider.RemoveAsync(toDoItem);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await toDoItemProvider.RemoveAsync(toDoItem);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(toDoItem);
+            }
+            
         }
         private bool ToDoItemExists(int id)
         {
