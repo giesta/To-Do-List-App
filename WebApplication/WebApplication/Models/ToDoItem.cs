@@ -1,16 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApplication.Services.ToDoList;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
+using ToDoList.Web.Services.ToDoList;
 
-namespace WebApplication.Models
+namespace ToDoList.Web.Models
 {
     public class ToDoItem : IHasId
     {

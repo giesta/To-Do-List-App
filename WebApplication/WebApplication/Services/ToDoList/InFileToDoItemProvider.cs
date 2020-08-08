@@ -1,14 +1,10 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using WebApplication.Models;
+using ToDoList.Web.Models;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class InFileToDoItemProvider : IToDoItemProvider
     {

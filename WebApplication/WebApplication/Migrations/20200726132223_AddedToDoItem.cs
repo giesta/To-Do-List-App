@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApplication.Migrations
+namespace ToDoList.Web.Migrations
 {
     public partial class AddedToDoItem : Migration
     {

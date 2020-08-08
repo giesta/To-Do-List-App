@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using WebApplication.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDoList.Web.Models;
 
-namespace WebApplication.Data
+namespace ToDoList.Web.Data
 {
     public class WebApplicationContext : DbContext
     {
@@ -14,12 +10,12 @@ namespace WebApplication.Data
         {
         }
 
-        public DbSet<WebApplication.Models.Category> Category { get; set; }
+        public DbSet<Category> Category { get; set; }
         public object TypeOfValue { get; internal set; }
       
-        public DbSet<WebApplication.Models.ToDoItem> ToDoItem { get; set; }
-        public DbSet<WebApplication.Models.Tag> Tag { get; set; }
-        public DbSet<WebApplication.Models.TagToDoItem> TagToDoItem { get; set; }
+        public DbSet<ToDoItem> ToDoItem { get; set; }
+        public DbSet<Tag> Tag { get; set; }
+        public DbSet<TagToDoItem> TagToDoItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

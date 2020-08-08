@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class InFileProvider<TypeOfValue>:Provider<TypeOfValue> where TypeOfValue:IHasId
     {

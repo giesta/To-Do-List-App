@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class Provider<TValue> : IProvider<TValue> where TValue : IHasId
     {

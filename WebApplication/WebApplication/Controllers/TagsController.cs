@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebApplication.Data;
-using WebApplication.Models;
-using WebApplication.Services.ToDoList;
+using ToDoList.Web.Data;
+using ToDoList.Web.Models;
+using ToDoList.Web.Services.ToDoList;
 
-namespace WebApplication.Controllers
+namespace ToDoList.Web.Controllers
 {
     public class TagsController : Controller
     {

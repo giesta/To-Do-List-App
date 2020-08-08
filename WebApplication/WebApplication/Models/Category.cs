@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApplication.Services.ToDoList;
+using ToDoList.Web.Services.ToDoList;
 
-namespace WebApplication.Models
+namespace ToDoList.Web.Models
 {
     public class Category : IHasId
     {

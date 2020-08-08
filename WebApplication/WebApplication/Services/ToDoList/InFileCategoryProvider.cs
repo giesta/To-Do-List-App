@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using WebApplication.Models;
-using Newtonsoft.Json;
+using ToDoList.Web.Models;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class InFileCategoryProvider : ICategoryProvider
     {

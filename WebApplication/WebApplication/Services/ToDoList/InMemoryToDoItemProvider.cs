@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApplication.Models;
+﻿using System.Collections.Generic;
+using ToDoList.Web.Models;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class InMemoryToDoItemProvider : IToDoItemProvider
     {

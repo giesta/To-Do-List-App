@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApplication.Data;
-using WebApplication.Models;
+using Microsoft.EntityFrameworkCore;
+using ToDoList.Web.Data;
+using ToDoList.Web.Models;
 
-namespace WebApplication.Services.ToDoList
+namespace ToDoList.Web.Services.ToDoList
 {
     public class CategoryEntityProvider : IProviderAsync<Category> 
     {
