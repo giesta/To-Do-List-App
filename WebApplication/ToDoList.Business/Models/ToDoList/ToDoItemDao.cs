@@ -6,7 +6,7 @@ using ToDoList.Business.Services.ToDoList;
 
 namespace ToDoList.Business.Models.ToDoList
 {
-    public class ToDoItem : IHasId
+    public class ToDoItemDao : IHasId
     {
         public int Id { get; set; }
         [Required]
@@ -37,10 +37,10 @@ namespace ToDoList.Business.Models.ToDoList
         [DefaultValue("Backlog")]
         public StatusName Status { get; set; }
 
-        public IList<TagToDoItem> TagToDoItems { get; set; }
+        public IList<TagToDoItemDao> TagToDoItems { get; set; }
         public override bool Equals(object obj)
         {
-            return obj is ToDoItem item &&
+            return obj is ToDoItemDao item &&
                    Id == item.Id;
         }
 

@@ -52,15 +52,15 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItem toDoItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItemDao toDoItemDao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(toDoItem);
+                _context.Add(toDoItemDao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(toDoItem);
+            return View(toDoItemDao);
         }
 
         // GET: ToDoItems1/Edit/5
@@ -84,9 +84,9 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItem toDoItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status")] ToDoItemDao toDoItemDao)
         {
-            if (id != toDoItem.Id)
+            if (id != toDoItemDao.Id)
             {
                 return NotFound();
             }
@@ -95,12 +95,12 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    _context.Update(toDoItem);
+                    _context.Update(toDoItemDao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ToDoItemExists(toDoItem.Id))
+                    if (!ToDoItemExists(toDoItemDao.Id))
                     {
                         return NotFound();
                     }
@@ -111,7 +111,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(toDoItem);
+            return View(toDoItemDao);
         }
 
         // GET: ToDoItems1/Delete/5

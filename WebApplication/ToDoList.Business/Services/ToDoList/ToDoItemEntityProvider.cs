@@ -7,39 +7,39 @@ using ToDoList.Business.Models.ToDoList;
 
 namespace ToDoList.Business.Services.ToDoList
 {
-    public class ToDoItemEntityProvider : IProviderAsync<ToDoItem>
+    public class ToDoItemEntityProvider : IProviderAsync<ToDoItemDao>
     {
         private readonly WebApplicationContext context;
         public ToDoItemEntityProvider(WebApplicationContext context)
         {
             this.context = context;
         }
-        public async Task AddAsync(ToDoItem toDoItem)
+        public async Task AddAsync(ToDoItemDao toDoItemDao)
         {
-            toDoItem.CreationDate = DateTime.UtcNow;
-            context.Add(toDoItem);
+            toDoItemDao.CreationDate = DateTime.UtcNow;
+            context.Add(toDoItemDao);
             await context.SaveChangesAsync();
         }
 
-        public async Task<ToDoItem> GetAsync(int id)
+        public async Task<ToDoItemDao> GetAsync(int id)
         {
             return await context.ToDoItem.Include(t => t.Category).FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<List<ToDoItem>> GetAllAsync()
+        public async Task<List<ToDoItemDao>> GetAllAsync()
         {
             return await context.ToDoItem.Include(t => t.Category).ToListAsync();
         }
 
-        public async Task RemoveAsync(ToDoItem toDoItem)
+        public async Task RemoveAsync(ToDoItemDao toDoItemDao)
         {
-            context.ToDoItem.Remove(toDoItem);
+            context.ToDoItem.Remove(toDoItemDao);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(ToDoItem toDoItem)
+        public async Task UpdateAsync(ToDoItemDao toDoItemDao)
         {
-            context.Update(toDoItem);
+            context.Update(toDoItemDao);
            await context.SaveChangesAsync();
         }
     }

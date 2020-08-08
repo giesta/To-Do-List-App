@@ -22,12 +22,12 @@ namespace ToDoList.Business.Services.ToDoList
 
         public async Task<List<TagDao>> GetAllAsync()
         {
-            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t => t.ToDoItem).AsNoTracking().ToListAsync();
+            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t => t.ToDoItemDao).AsNoTracking().ToListAsync();
         }
 
         public async Task<TagDao> GetAsync(int id)
         {
-            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t=>t.ToDoItem).AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t=>t.ToDoItemDao).AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task RemoveAsync(TagDao tagDao)
@@ -39,10 +39,10 @@ namespace ToDoList.Business.Services.ToDoList
         public async Task UpdateAsync(TagDao tagDao)
         {
            
-            List<TagToDoItem> tagToDoItems = context.TagToDoItem.Where(t=>t.TagId==tagDao.Id).ToList();
+            List<TagToDoItemDao> tagToDoItems = context.TagToDoItem.Where(t=>t.TagId==tagDao.Id).ToList();
             if(tagToDoItems!= null)
             {
-                foreach(TagToDoItem tagToDoItem in tagToDoItems)
+                foreach(TagToDoItemDao tagToDoItem in tagToDoItems)
                  {
                     context.Remove(tagToDoItem);
                  }

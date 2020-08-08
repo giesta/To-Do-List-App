@@ -11,9 +11,9 @@ namespace ToDoList.Web.Controllers
     public class ToDoItemsController : Controller
     {
         
-        private readonly IProviderAsync<ToDoItem> toDoItemProvider;
+        private readonly IProviderAsync<ToDoItemDao> toDoItemProvider;
         private readonly IProviderAsync<CategoryDao> categoryProvider;
-        public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<CategoryDao> categoryProvider)
+        public ToDoItemsController(IProviderAsync<ToDoItemDao> toDoItemProvider, IProviderAsync<CategoryDao> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;
             this.categoryProvider = categoryProvider;
@@ -46,14 +46,14 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemDao toDoItemDao)
         {
             if (ModelState.IsValid)
             {
-                await toDoItemProvider.AddAsync(toDoItem);
+                await toDoItemProvider.AddAsync(toDoItemDao);
                 return RedirectToAction(nameof(Index));
             }
-            return View(toDoItem);
+            return View(toDoItemDao);
         }
 
         // GET: ToDoItemController/Edit/5
@@ -71,9 +71,9 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItem toDoItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemDao toDoItemDao)
         {
-            if (id != toDoItem.Id)
+            if (id != toDoItemDao.Id)
             {
                 return NotFound();
             }
@@ -82,11 +82,11 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    await toDoItemProvider.UpdateAsync(toDoItem);
+                    await toDoItemProvider.UpdateAsync(toDoItemDao);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ToDoItemExists(toDoItem.Id))
+                    if (!ToDoItemExists(toDoItemDao.Id))
                     {
                         return NotFound();
                     }
@@ -97,7 +97,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(toDoItem);
+            return View(toDoItemDao);
         }
 
         // GET: ToDoItemController/Delete/5
@@ -115,16 +115,16 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(ToDoItem toDoItem)
+        public async Task<IActionResult> DeleteConfirmed(ToDoItemDao toDoItemDao)
         {
             try
             {
-                await toDoItemProvider.RemoveAsync(toDoItem);
+                await toDoItemProvider.RemoveAsync(toDoItemDao);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(toDoItem);
+                return View(toDoItemDao);
             }
             
         }

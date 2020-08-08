@@ -9,7 +9,7 @@ namespace ToDoList.Business.Models.ToDoList
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IList<TagToDoItem> TagToDoItems { get; set; }
+        public IList<TagToDoItemDao> TagToDoItems { get; set; }
 
         public override bool Equals(object obj)
         {

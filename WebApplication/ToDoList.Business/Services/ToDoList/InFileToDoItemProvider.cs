@@ -12,18 +12,18 @@ namespace ToDoList.Web.Services.ToDoList
     {
         private readonly string fileName = "toDoItem.txt";
         
-        public void Add(ToDoItem toDoItem)
+        public void Add(ToDoItemDao toDoItemDao)
         {
-            toDoItem.Id = GetUniqueId();
-            WriteToFile(toDoItem);
+            toDoItemDao.Id = GetUniqueId();
+            WriteToFile(toDoItemDao);
         }
 
-        public ToDoItem Get(int id)
+        public ToDoItemDao Get(int id)
         {
             return GetFromFileById(id);
         }
 
-        public List<ToDoItem> GetAll()
+        public List<ToDoItemDao> GetAll()
         {
             return ReadFromFile();
         }
@@ -33,18 +33,18 @@ namespace ToDoList.Web.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(ToDoItem toDoItem)
+        public void Remove(ToDoItemDao toDoItemDao)
         {
-            RemoveFromFileById(toDoItem.Id);
+            RemoveFromFileById(toDoItemDao.Id);
         }
         /// <summary>
         /// Read all categories from the file
         /// </summary>
         /// <returns>Returns list of ToDoItems</returns>
-        private List<ToDoItem> ReadFromFile()
+        private List<ToDoItemDao> ReadFromFile()
         {
             string[] lines;
-            var list = new List<ToDoItem>();
+            var list = new List<ToDoItemDao>();
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -52,7 +52,7 @@ namespace ToDoList.Web.Services.ToDoList
                 while ((line = streamReader.ReadLine()) != null)
                 {
                     lines = line.Split(";");
-                    list.Add(new ToDoItem() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) });
+                    list.Add(new ToDoItemDao() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) });
                 }
             }
             return list;
@@ -63,13 +63,13 @@ namespace ToDoList.Web.Services.ToDoList
         /// <returns>Returns ID</returns>
         private int GetUniqueId()
         {
-            List<ToDoItem> toDoItems = ReadFromFile();
+            List<ToDoItemDao> toDoItems = ReadFromFile();
             int index = 0;
             bool find;
             for (int i = 0; i < toDoItems.Count; i++)
             {
                 find = true;
-                foreach (ToDoItem toDoItem in toDoItems)
+                foreach (ToDoItemDao toDoItem in toDoItems)
                 {
                     if (index == toDoItem.Id)
                     {
@@ -88,11 +88,11 @@ namespace ToDoList.Web.Services.ToDoList
         /// <summary>
         /// Write a ToDoItem into the file
         /// </summary>
-        private void WriteToFile(ToDoItem toDoItem)
+        private void WriteToFile(ToDoItemDao toDoItemDao)
         {
             using (StreamWriter writer = new StreamWriter(fileName, true))
             {
-                writer.WriteLine(toDoItem.Id + ";" + toDoItem.Name + ";" + toDoItem.Description + ";" + toDoItem.Priority);
+                writer.WriteLine(toDoItemDao.Id + ";" + toDoItemDao.Name + ";" + toDoItemDao.Description + ";" + toDoItemDao.Priority);
             }
         }
         /// <summary>
@@ -137,10 +137,10 @@ namespace ToDoList.Web.Services.ToDoList
         /// </summary>
         /// <param name="id">ToDoItem ID</param>
         /// <returns>Returns a ToDoItem</returns>
-        private ToDoItem GetFromFileById(int id)
+        private ToDoItemDao GetFromFileById(int id)
         {
             string[] lines;
-            ToDoItem toDoItem = null;
+            ToDoItemDao toDoItemDao = null;
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -150,13 +150,13 @@ namespace ToDoList.Web.Services.ToDoList
                     lines = line.Split(";");
                     if (Int16.Parse(lines[0]) == id)
                     {
-                        toDoItem = new ToDoItem() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) };
-                        return toDoItem;
+                        toDoItemDao = new ToDoItemDao() { Id = Int16.Parse(lines[0]), Name = lines[1], Description = lines[2], Priority = Int16.Parse(lines[3]) };
+                        return toDoItemDao;
                     }
 
                 }
             }
-            return toDoItem;
+            return toDoItemDao;
         }
         /// <summary>
         /// Remove a ToDoItem from the file by ID
@@ -184,10 +184,10 @@ namespace ToDoList.Web.Services.ToDoList
             RewriteToFile();
         }
 
-        public void Update(ToDoItem toDoItem)
+        public void Update(ToDoItemDao toDoItemDao)
         {
-            RemoveFromFileById(toDoItem.Id);
-            WriteToFile(toDoItem);
+            RemoveFromFileById(toDoItemDao.Id);
+            WriteToFile(toDoItemDao);
         }
     }
 }

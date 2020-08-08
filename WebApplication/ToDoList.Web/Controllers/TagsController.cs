@@ -14,8 +14,8 @@ namespace ToDoList.Web.Controllers
     public class TagsController : Controller
     {
         private readonly IProviderAsync<TagDao> tagProvider;
-        private readonly IProviderAsync<ToDoItem> toDoItemProvider;
-        public TagsController(IProviderAsync<TagDao> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider, WebApplicationContext context)
+        private readonly IProviderAsync<ToDoItemDao> toDoItemProvider;
+        public TagsController(IProviderAsync<TagDao> tagProvider, IProviderAsync<ToDoItemDao> toDoItemProvider, WebApplicationContext context)
         {
             this.tagProvider = tagProvider;
             this.toDoItemProvider = toDoItemProvider;
@@ -52,14 +52,14 @@ namespace ToDoList.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TagDao tagDao, int[] ToDoItems)
         {
-            tagDao.TagToDoItems = new List<TagToDoItem>();
+            tagDao.TagToDoItems = new List<TagToDoItemDao>();
             
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tagDao.Id };
-                    tagDao.TagToDoItems.Add(tagToDoItem);
+                    TagToDoItemDao tagToDoItemDao = new TagToDoItemDao { ToDoItemId = toDoItemID, TagId = tagDao.Id };
+                    tagDao.TagToDoItems.Add(tagToDoItemDao);
                 }
 
                 await tagProvider.AddAsync(tagDao);
@@ -94,14 +94,14 @@ namespace ToDoList.Web.Controllers
                 return NotFound();
             }
             
-            tagDao.TagToDoItems = new List<TagToDoItem>();
+            tagDao.TagToDoItems = new List<TagToDoItemDao>();
             await tagProvider.UpdateAsync(tagDao);
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tagDao.Id };
-                    tagDao.TagToDoItems.Add(tagToDoItem);
+                    TagToDoItemDao tagToDoItemDao = new TagToDoItemDao { ToDoItemId = toDoItemID, TagId = tagDao.Id };
+                    tagDao.TagToDoItems.Add(tagToDoItemDao);
                 }
                 try
                 {

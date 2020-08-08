@@ -5,11 +5,11 @@ namespace ToDoList.Business.Services.ToDoList
 {
     public interface IToDoItemProvider
     {
-        List<ToDoItem> GetAll();
-        ToDoItem Get(int id);
-        void Add(ToDoItem toDoItem);
+        List<ToDoItemDao> GetAll();
+        ToDoItemDao Get(int id);
+        void Add(ToDoItemDao toDoItemDao);
         int GetIndexToInsert();
-        void Remove(ToDoItem toDoItem);
-        void Update(ToDoItem toDoItem);
+        void Remove(ToDoItemDao toDoItemDao);
+        void Update(ToDoItemDao toDoItemDao);
     }
 }

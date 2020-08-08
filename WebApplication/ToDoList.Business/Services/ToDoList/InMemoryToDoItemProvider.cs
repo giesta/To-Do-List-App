@@ -6,19 +6,19 @@ namespace ToDoList.Business.Services.ToDoList
     public class InMemoryToDoItemProvider : IToDoItemProvider
     {
 
-        static private List<ToDoItem> dataPile = new List<ToDoItem>();
-        public void Add(ToDoItem toDoItem)
+        static private List<ToDoItemDao> dataPile = new List<ToDoItemDao>();
+        public void Add(ToDoItemDao toDoItemDao)
         {
-            toDoItem.Id = GetUniqueId();
-            dataPile.Add(toDoItem);
+            toDoItemDao.Id = GetUniqueId();
+            dataPile.Add(toDoItemDao);
         }
 
-        public ToDoItem Get(int id)
+        public ToDoItemDao Get(int id)
         {
             return dataPile[id];
         }
 
-        public List<ToDoItem> GetAll()
+        public List<ToDoItemDao> GetAll()
         {
             return dataPile;
         }
@@ -28,15 +28,15 @@ namespace ToDoList.Business.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(ToDoItem toDoItem)
+        public void Remove(ToDoItemDao toDoItemDao)
         {
-            dataPile.Remove(toDoItem);
+            dataPile.Remove(toDoItemDao);
         }
 
-        public void Update(ToDoItem toDoItem)
+        public void Update(ToDoItemDao toDoItemDao)
         {
-            dataPile.Remove(toDoItem);
-            dataPile.Add(toDoItem);
+            dataPile.Remove(toDoItemDao);
+            dataPile.Add(toDoItemDao);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace ToDoList.Business.Services.ToDoList
             for (int i = 0; i < dataPile.Count; i++)
             {
                 find = true;
-                foreach (ToDoItem toDoItem in dataPile)
+                foreach (ToDoItemDao toDoItem in dataPile)
                 {
                     if (index == toDoItem.Id)
                     {
