@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ToDoList.Web.Services.ToDoList
+namespace ToDoList.Business.Services.ToDoList
 {
     public class Provider<TValue> : IProvider<TValue> where TValue : IHasId
     {

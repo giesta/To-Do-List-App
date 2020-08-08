@@ -1,7 +1,7 @@
 ﻿using System;
-using ToDoList.Web.Services.ToDoList;
+using ToDoList.Business.Services.ToDoList;
 
-namespace ToDoList.Web.Models
+namespace ToDoList.Business.Models.ToDoList
 {
     public class Category : IHasId
     {

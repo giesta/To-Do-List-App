@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ToDoList.Web.Migrations
+namespace ToDoList.Business.Migrations
 {
     public partial class AddedCategory : Migration
     {

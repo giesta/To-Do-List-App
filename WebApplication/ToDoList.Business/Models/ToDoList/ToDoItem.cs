@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ToDoList.Web.Services.ToDoList;
+using ToDoList.Business.Services.ToDoList;
 
-namespace ToDoList.Web.Models
+namespace ToDoList.Business.Models.ToDoList
 {
     public class ToDoItem : IHasId
     {

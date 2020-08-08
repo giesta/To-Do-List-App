@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ToDoList.Web.Data;
+using ToDoList.Business.Data;
+using ToDoList.Business.Models.ToDoList;
+using ToDoList.Business.Services.ToDoList;
 using ToDoList.Web.Models;
-using ToDoList.Web.Services.ToDoList;
 
 namespace ToDoList.Web
 {

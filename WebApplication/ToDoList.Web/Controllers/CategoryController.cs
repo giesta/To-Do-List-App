@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ToDoList.Business.Models.ToDoList;
+using ToDoList.Business.Services.ToDoList;
 using ToDoList.Web.Models;
-using ToDoList.Web.Services.ToDoList;
 
 namespace ToDoList.Web.Controllers
 {

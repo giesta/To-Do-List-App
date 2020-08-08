@@ -1,4 +1,4 @@
-﻿namespace ToDoList.Web.Services.ToDoList
+﻿namespace ToDoList.Business.Services.ToDoList
 {
     public interface IHasId
     {

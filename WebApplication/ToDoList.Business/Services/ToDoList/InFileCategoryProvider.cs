@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ToDoList.Web.Models;
+using ToDoList.Business.Models.ToDoList;
 
-namespace ToDoList.Web.Services.ToDoList
+namespace ToDoList.Business.Services.ToDoList
 {
     public class InFileCategoryProvider : ICategoryProvider
     {

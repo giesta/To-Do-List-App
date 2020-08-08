@@ -1,4 +1,4 @@
-﻿namespace ToDoList.Web.Models
+﻿namespace ToDoList.Business.Models.ToDoList
 {
     public class TagToDoItem
     {

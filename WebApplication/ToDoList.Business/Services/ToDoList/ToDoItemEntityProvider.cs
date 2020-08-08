@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Web.Data;
-using ToDoList.Web.Models;
+using ToDoList.Business.Data;
+using ToDoList.Business.Models.ToDoList;
 
-namespace ToDoList.Web.Services.ToDoList
+namespace ToDoList.Business.Services.ToDoList
 {
     public class ToDoItemEntityProvider : IProviderAsync<ToDoItem>
     {
