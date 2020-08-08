@@ -7,39 +7,39 @@ using ToDoList.Business.Models.ToDoList;
 
 namespace ToDoList.Business.Services.ToDoList
 {
-    public class TagEntityProvider : IProviderAsync<Tag>
+    public class TagEntityProvider : IProviderAsync<TagDao>
     {
         private readonly WebApplicationContext context;
         public TagEntityProvider(WebApplicationContext context)
         {
             this.context = context;
         }
-        public async Task AddAsync(Tag tag)
+        public async Task AddAsync(TagDao tagDao)
         {            
-            context.Add(tag);
+            context.Add(tagDao);
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<Tag>> GetAllAsync()
+        public async Task<List<TagDao>> GetAllAsync()
         {
             return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t => t.ToDoItem).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Tag> GetAsync(int id)
+        public async Task<TagDao> GetAsync(int id)
         {
             return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t=>t.ToDoItem).AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task RemoveAsync(Tag tag)
+        public async Task RemoveAsync(TagDao tagDao)
         {
-            context.Remove(tag);
+            context.Remove(tagDao);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Tag tag)
+        public async Task UpdateAsync(TagDao tagDao)
         {
            
-            List<TagToDoItem> tagToDoItems = context.TagToDoItem.Where(t=>t.TagId==tag.Id).ToList();
+            List<TagToDoItem> tagToDoItems = context.TagToDoItem.Where(t=>t.TagId==tagDao.Id).ToList();
             if(tagToDoItems!= null)
             {
                 foreach(TagToDoItem tagToDoItem in tagToDoItems)
@@ -47,7 +47,7 @@ namespace ToDoList.Business.Services.ToDoList
                     context.Remove(tagToDoItem);
                  }
             }            
-            context.Update(tag);
+            context.Update(tagDao);
             await context.SaveChangesAsync();
         }
     }

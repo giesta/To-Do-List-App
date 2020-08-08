@@ -4,7 +4,7 @@ using ToDoList.Business.Services.ToDoList;
 
 namespace ToDoList.Business.Models.ToDoList
 {
-    public class Tag : IHasId
+    public class TagDao : IHasId
     {
         public int Id { get; set; }
         public string Name { get; set; }

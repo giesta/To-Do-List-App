@@ -14,7 +14,7 @@ namespace ToDoList.Business.Data
         public object TypeOfValue { get; internal set; }
       
         public DbSet<ToDoItem> ToDoItem { get; set; }
-        public DbSet<Tag> Tag { get; set; }
+        public DbSet<TagDao> Tag { get; set; }
         public DbSet<TagToDoItem> TagToDoItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace ToDoList.Business.Data
             modelBuilder.Entity<TagToDoItem>()
                 .HasKey(cs => new { cs.TagId, cs.ToDoItemId });
             modelBuilder.Entity<TagToDoItem>()
-            .HasOne<Tag>(sc => sc.Tag)
+            .HasOne<TagDao>(sc => sc.TagDao)
             .WithMany(s => s.TagToDoItems)
             .HasForeignKey(sc => sc.TagId);
 

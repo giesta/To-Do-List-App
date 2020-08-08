@@ -34,7 +34,7 @@ namespace ToDoList.Web
             //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
             services.AddTransient<IProviderAsync<CategoryDao>, CategoryEntityProvider>();
             services.AddTransient<IProviderAsync<ToDoItem>, ToDoItemEntityProvider>();
-            services.AddTransient<IProviderAsync<Tag>, TagEntityProvider>();
+            services.AddTransient<IProviderAsync<TagDao>, TagEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }

@@ -13,9 +13,9 @@ namespace ToDoList.Web.Controllers
 {
     public class TagsController : Controller
     {
-        private readonly IProviderAsync<Tag> tagProvider;
+        private readonly IProviderAsync<TagDao> tagProvider;
         private readonly IProviderAsync<ToDoItem> toDoItemProvider;
-        public TagsController(IProviderAsync<Tag> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider, WebApplicationContext context)
+        public TagsController(IProviderAsync<TagDao> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider, WebApplicationContext context)
         {
             this.tagProvider = tagProvider;
             this.toDoItemProvider = toDoItemProvider;
@@ -50,22 +50,22 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Tag tag, int[] ToDoItems)
+        public async Task<IActionResult> Create(TagDao tagDao, int[] ToDoItems)
         {
-            tag.TagToDoItems = new List<TagToDoItem>();
+            tagDao.TagToDoItems = new List<TagToDoItem>();
             
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    tag.TagToDoItems.Add(tagToDoItem);
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tagDao.Id };
+                    tagDao.TagToDoItems.Add(tagToDoItem);
                 }
 
-                await tagProvider.AddAsync(tag);
+                await tagProvider.AddAsync(tagDao);
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return View(tagDao);
         }
 
         // GET: Tags/Edit/5
@@ -87,29 +87,29 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Tag tag, int[] ToDoItems)
+        public async Task<IActionResult> Edit(int id, TagDao tagDao, int[] ToDoItems)
         {
-            if (id != tag.Id)
+            if (id != tagDao.Id)
             {
                 return NotFound();
             }
             
-            tag.TagToDoItems = new List<TagToDoItem>();
-            await tagProvider.UpdateAsync(tag);
+            tagDao.TagToDoItems = new List<TagToDoItem>();
+            await tagProvider.UpdateAsync(tagDao);
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    tag.TagToDoItems.Add(tagToDoItem);
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tagDao.Id };
+                    tagDao.TagToDoItems.Add(tagToDoItem);
                 }
                 try
                 {
-                    await tagProvider.UpdateAsync(tag);
+                    await tagProvider.UpdateAsync(tagDao);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TagExists(tag.Id))
+                    if (!TagExists(tagDao.Id))
                     {
                         return NotFound();
                     }
@@ -120,7 +120,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return View(tagDao);
         }
 
         // GET: Tags/Delete/5
@@ -138,16 +138,16 @@ namespace ToDoList.Web.Controllers
         // POST: Tags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Tag tag)
+        public async Task<IActionResult> DeleteConfirmed(TagDao tagDao)
         {
             try
             {
-                await tagProvider.RemoveAsync(tag);
+                await tagProvider.RemoveAsync(tagDao);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(tag);
+                return View(tagDao);
             }
 
         }

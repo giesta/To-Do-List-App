@@ -3,7 +3,7 @@
     public class TagToDoItem
     {
         public int TagId { get; set; }
-        public Tag Tag { get; set; }
+        public TagDao TagDao { get; set; }
 
         public int ToDoItemId { get; set; }
         public ToDoItem ToDoItem { get; set; }
