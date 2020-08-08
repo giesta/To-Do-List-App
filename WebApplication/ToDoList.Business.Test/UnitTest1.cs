@@ -1,7 +1,6 @@
-using System;
 using Xunit;
 
-namespace ToDoList.Business.Test
+namespace ToDoList.Business.Tests
 {
     public class UnitTest1
     {
