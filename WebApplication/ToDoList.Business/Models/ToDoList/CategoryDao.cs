@@ -3,14 +3,14 @@ using ToDoList.Business.Services.ToDoList;
 
 namespace ToDoList.Business.Models.ToDoList
 {
-    public class Category : IHasId
+    public class CategoryDao : IHasId
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
         public override bool Equals(object obj)
         {
-            return obj is Category category &&
+            return obj is CategoryDao category &&
                    Id == category.Id;
         }
 

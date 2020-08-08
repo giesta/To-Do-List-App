@@ -6,7 +6,7 @@ using ToDoList.Business.Models.ToDoList;
 
 namespace ToDoList.Business.Services.ToDoList
 {
-    public class CategoryEntityProvider : IProviderAsync<Category> 
+    public class CategoryEntityProvider : IProviderAsync<CategoryDao> 
     {
         private readonly WebApplicationContext context;
 
@@ -14,29 +14,29 @@ namespace ToDoList.Business.Services.ToDoList
         {
             this.context = context;
         }
-        public async Task AddAsync(Category category)
+        public async Task AddAsync(CategoryDao category)
         {
             context.Add(category);
             await context.SaveChangesAsync();
         }
 
-        public async Task<Category> GetAsync(int id)
+        public async Task<CategoryDao> GetAsync(int id)
         {
             return await context.Category.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<List<Category>> GetAllAsync()
+        public async Task<List<CategoryDao>> GetAllAsync()
         {
             return await context.Category.ToListAsync();
         }
 
-        public async Task RemoveAsync(Category category)
+        public async Task RemoveAsync(CategoryDao category)
         {
             context.Category.Remove(category);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Category category)
+        public async Task UpdateAsync(CategoryDao category)
         {
             context.Update(category);
             await context.SaveChangesAsync();

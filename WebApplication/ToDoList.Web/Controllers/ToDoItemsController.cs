@@ -12,8 +12,8 @@ namespace ToDoList.Web.Controllers
     {
         
         private readonly IProviderAsync<ToDoItem> toDoItemProvider;
-        private readonly IProviderAsync<Category> categoryProvider;
-        public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<Category> categoryProvider)
+        private readonly IProviderAsync<CategoryDao> categoryProvider;
+        public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<CategoryDao> categoryProvider)
         {
             this.toDoItemProvider = toDoItemProvider;
             this.categoryProvider = categoryProvider;

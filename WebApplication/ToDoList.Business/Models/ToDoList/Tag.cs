@@ -13,7 +13,7 @@ namespace ToDoList.Business.Models.ToDoList
 
         public override bool Equals(object obj)
         {
-            return obj is Category category &&
+            return obj is CategoryDao category &&
                    Id == category.Id;
         }
 

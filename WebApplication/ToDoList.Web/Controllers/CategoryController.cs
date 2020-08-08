@@ -9,8 +9,8 @@ namespace ToDoList.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IProviderAsync<Category> categoryProvider;
-        public CategoryController(IProviderAsync<Category> categoryProvider)
+        private readonly IProviderAsync<CategoryDao> categoryProvider;
+        public CategoryController(IProviderAsync<CategoryDao> categoryProvider)
         {
             this.categoryProvider = categoryProvider;
         }
@@ -40,7 +40,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao category)
         {
              if (ModelState.IsValid)
               {
@@ -64,7 +64,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao category)
         {
             if (id != category.Id)
             {
@@ -108,7 +108,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Category category)
+        public async Task<IActionResult> DeleteConfirmed(CategoryDao category)
         {
             try
             {

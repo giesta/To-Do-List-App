@@ -10,7 +10,7 @@ namespace ToDoList.Business.Data
         {
         }
 
-        public DbSet<Category> Category { get; set; }
+        public DbSet<CategoryDao> Category { get; set; }
         public object TypeOfValue { get; internal set; }
       
         public DbSet<ToDoItem> ToDoItem { get; set; }

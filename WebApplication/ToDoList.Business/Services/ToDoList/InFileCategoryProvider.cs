@@ -9,18 +9,18 @@ namespace ToDoList.Business.Services.ToDoList
     public class InFileCategoryProvider : ICategoryProvider
     {
         private readonly string fileName = "category.txt";
-        public void Add(Category category)
+        public void Add(CategoryDao category)
         {
             category.Id = GetUniqueId();
             WriteToFile(category);
         }
 
-        public Category Get(int id)
+        public CategoryDao Get(int id)
         {
             return GetFromFileById(id);
         }
 
-        public List<Category> GetAll()
+        public List<CategoryDao> GetAll()
         {
             return ReadFromFile();
         }
@@ -30,7 +30,7 @@ namespace ToDoList.Business.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(Category category)
+        public void Remove(CategoryDao category)
         {
             RemoveFromFileById(category.Id);
         }
@@ -39,10 +39,10 @@ namespace ToDoList.Business.Services.ToDoList
         /// Read all categories from the file
         /// </summary>
         /// <returns>Returns list of categories</returns>
-        private List<Category> ReadFromFile()
+        private List<CategoryDao> ReadFromFile()
         {
             string[] lines;
-            var list = new List<Category>();
+            var list = new List<CategoryDao>();
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -50,7 +50,7 @@ namespace ToDoList.Business.Services.ToDoList
                 while ((line = streamReader.ReadLine()) != null)
                 {
                     lines = line.Split(";");
-                    list.Add(new Category() { Id = Int16.Parse(lines[0]), Name = lines[1] });
+                    list.Add(new CategoryDao() { Id = Int16.Parse(lines[0]), Name = lines[1] });
                 }
             }
             return list;
@@ -61,13 +61,13 @@ namespace ToDoList.Business.Services.ToDoList
         /// <returns>Returns ID</returns>
         private int GetUniqueId()
         {
-            List<Category> categories = ReadFromFile();
+            List<CategoryDao> categories = ReadFromFile();
             int index = 0;
             bool find;
             for (int i = 0; i < categories.Count; i++)
             {
                 find = true;
-                foreach (Category category in categories)
+                foreach (CategoryDao category in categories)
                 {
                     if (index == category.Id)
                     {
@@ -86,7 +86,7 @@ namespace ToDoList.Business.Services.ToDoList
         /// <summary>
         /// Write a category into the file
         /// </summary>
-        private void WriteToFile(Category category)
+        private void WriteToFile(CategoryDao category)
         {
             using (StreamWriter writer = new StreamWriter(fileName, true))
             {
@@ -132,10 +132,10 @@ namespace ToDoList.Business.Services.ToDoList
         /// </summary>
         /// <param name="id">Category ID</param>
         /// <returns>Returns a category</returns>
-        private Category GetFromFileById(int id)
+        private CategoryDao GetFromFileById(int id)
         {
             string[] lines;
-            Category category = null;
+            CategoryDao category = null;
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -145,7 +145,7 @@ namespace ToDoList.Business.Services.ToDoList
                     lines = line.Split(";");
                     if (Int16.Parse(lines[0]) == id)
                     {
-                        category = new Category() { Id = Int16.Parse(lines[0]), Name = lines[1] };
+                        category = new CategoryDao() { Id = Int16.Parse(lines[0]), Name = lines[1] };
                         return category;
                     }
 
@@ -179,7 +179,7 @@ namespace ToDoList.Business.Services.ToDoList
             RewriteFiles();
         }
 
-        public void Update(Category category)
+        public void Update(CategoryDao category)
         {
             RemoveFromFileById(category.Id);
             WriteToFile(category);

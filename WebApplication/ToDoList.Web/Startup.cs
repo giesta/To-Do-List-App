@@ -32,7 +32,7 @@ namespace ToDoList.Web
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
             //services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
             //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
-            services.AddTransient<IProviderAsync<Category>, CategoryEntityProvider>();
+            services.AddTransient<IProviderAsync<CategoryDao>, CategoryEntityProvider>();
             services.AddTransient<IProviderAsync<ToDoItem>, ToDoItemEntityProvider>();
             services.AddTransient<IProviderAsync<Tag>, TagEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>

@@ -32,7 +32,7 @@ namespace ToDoList.Business.Models.ToDoList
         public int? CategoryID { get; set; }
         [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "Uncategorized")]
         [DefaultValue(null)]
-        public virtual Category? Category { get; set; }
+        public virtual CategoryDao? Category { get; set; }
         #nullable disable
         [DefaultValue("Backlog")]
         public StatusName Status { get; set; }

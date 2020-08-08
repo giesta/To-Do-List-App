@@ -5,19 +5,19 @@ namespace ToDoList.Business.Services.ToDoList
 {
     public class InMemoryCategoryProvider : ICategoryProvider
     {
-        static private List<Category> dataPile = new List<Category>();
-        public void Add(Category category)
+        static private List<CategoryDao> dataPile = new List<CategoryDao>();
+        public void Add(CategoryDao category)
         {
             category.Id = GetUniqueId();
             dataPile.Add(category);
         }
 
-        public Category Get(int id)
+        public CategoryDao Get(int id)
         {
             return dataPile[id];
         }
 
-        public List<Category> GetAll()
+        public List<CategoryDao> GetAll()
         {
             return dataPile;
         }
@@ -27,12 +27,12 @@ namespace ToDoList.Business.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(Category category)
+        public void Remove(CategoryDao category)
         {
             dataPile.Remove(category);
         }
 
-        public void Update(Category category)
+        public void Update(CategoryDao category)
         {
             dataPile.Remove(category);
             dataPile.Add(category);
@@ -49,7 +49,7 @@ namespace ToDoList.Business.Services.ToDoList
             for (int i = 0; i < dataPile.Count; i++)
             {
                 find = true;
-                foreach (Category category in dataPile)
+                foreach (CategoryDao category in dataPile)
                 {
                     if (index == category.Id)
                     {
