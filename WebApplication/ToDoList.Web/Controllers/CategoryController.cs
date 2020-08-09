@@ -1,23 +1,28 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Business.Models.ToDoList;
 using ToDoList.Business.Services.ToDoList;
 using ToDoList.Web.Models;
+using ToDoList.Web.ViewModel.ToDoList;
 
 namespace ToDoList.Web.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly IProviderAsync<CategoryDao> categoryProvider;
-        public CategoryController(IProviderAsync<CategoryDao> categoryProvider)
+        private readonly IMapper mapper;
+        public CategoryController(IProviderAsync<CategoryDao> categoryProvider, IMapper mapper)
         {
             this.categoryProvider = categoryProvider;
+            this.mapper = mapper;
         }
         // GET: CategoryController
         public async Task<IActionResult> Index()
         {
-            return View(await categoryProvider.GetAllAsync());
+            return View(mapper.Map<IEnumerable<CategoryViewModel>>(await categoryProvider.GetAllAsync()));
         }
 
         // GET: CategoryController/Details/5
@@ -28,7 +33,7 @@ namespace ToDoList.Web.Controllers
             {
                 return NotFound();
             }
-            return View(category);
+            return View(mapper.Map <  CategoryViewModel > (category));
         }
 
         // GET: CategoryController/Create
@@ -40,14 +45,14 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao categoryDao)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao category)
         {
              if (ModelState.IsValid)
               {
-                    await categoryProvider.AddAsync(categoryDao);
+                    await categoryProvider.AddAsync(category);
                     return RedirectToAction(nameof(Index));
              }
-            return View(categoryDao);
+            return View(mapper.Map<CategoryViewModel>(category));
         }
 
         // GET: CategoryController/Edit/5
@@ -58,15 +63,15 @@ namespace ToDoList.Web.Controllers
             {
                 return NotFound();
             }
-            return View(category);
+            return View(mapper.Map<CategoryViewModel>(category));
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao categoryDao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao category)
         {
-            if (id != categoryDao.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -75,11 +80,11 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    await categoryProvider.UpdateAsync(categoryDao);
+                    await categoryProvider.UpdateAsync(category);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(categoryDao.Id))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -90,7 +95,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(categoryDao);
+            return View(mapper.Map<CategoryViewModel>(category));
         }
 
         // GET: CategoryController/Delete/5
@@ -102,22 +107,22 @@ namespace ToDoList.Web.Controllers
                 return NotFound();
             }
 
-            return View(category);
+            return View(mapper.Map<CategoryViewModel>(category));
         }
 
         // POST: CategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(CategoryDao categoryDao)
+        public async Task<IActionResult> DeleteConfirmed(CategoryDao category)
         {
             try
             {
-                await categoryProvider.RemoveAsync(categoryDao);
+                await categoryProvider.RemoveAsync(category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(categoryDao);
+                return View(mapper.Map<CategoryViewModel>(category));
             }
             
         }
