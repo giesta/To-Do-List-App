@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ToDoList.Business.Models.ToDoList;
+using ToDoList.Data.Models.ToDoList;
 
 namespace ToDoList.Web.ViewModel.ToDoList
 {

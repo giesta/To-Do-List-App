@@ -5,9 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ToDoList.Business.Data;
-using ToDoList.Business.Models.ToDoList;
+using ToDoList.Business.Models;
 using ToDoList.Business.Services.ToDoList;
+using ToDoList.Data.Data;
+using ToDoList.Data.Models.ToDoList;
 using ToDoList.Web.Models;
 
 namespace ToDoList.Web
@@ -34,7 +35,7 @@ namespace ToDoList.Web
             //services.AddSingleton<ICategoryProvider, InMemoryCategoryProvider>();
             //services.AddSingleton<IGenericProvider<Category>, GenericProvider<Category>>();
             //services.AddSingleton<IGenericProvider<ToDoItem>, GenericProvider<ToDoItem>>();
-            services.AddTransient<IProviderAsync<CategoryDao>, CategoryEntityProvider>();
+            services.AddTransient<IProviderAsync<Category>, CategoryEntityProvider>();
             services.AddTransient<IProviderAsync<ToDoItemDao>, ToDoItemEntityProvider>();
             services.AddTransient<IProviderAsync<TagDao>, TagEntityProvider>();
             services.AddDbContext<WebApplicationContext>(options =>

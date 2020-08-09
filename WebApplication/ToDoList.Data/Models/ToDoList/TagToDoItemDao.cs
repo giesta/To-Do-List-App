@@ -1,4 +1,4 @@
-﻿namespace ToDoList.Business.Models.ToDoList
+﻿namespace ToDoList.Data.Models.ToDoList
 {
     public class TagToDoItemDao
     {

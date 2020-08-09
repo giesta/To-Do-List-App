@@ -4,8 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Business.Models.ToDoList;
 using ToDoList.Business.Services.ToDoList;
+using ToDoList.Data.Models.ToDoList;
 using ToDoList.Web.Models;
 using ToDoList.Web.ViewModel.ToDoList;
 

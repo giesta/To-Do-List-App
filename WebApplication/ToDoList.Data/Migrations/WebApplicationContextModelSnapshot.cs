@@ -4,9 +4,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ToDoList.Business.Data;
+using ToDoList.Data.Data;
 
-namespace ToDoList.Business.Migrations
+namespace ToDoList.Data.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
     partial class WebApplicationContextModelSnapshot : ModelSnapshot

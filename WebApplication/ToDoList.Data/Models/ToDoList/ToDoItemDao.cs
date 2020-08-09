@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ToDoList.Business.Services.ToDoList;
 
-namespace ToDoList.Business.Models.ToDoList
+namespace ToDoList.Data.Models.ToDoList
 {
-    public class ToDoItemDao : IHasId
+    public class ToDoItemDao
     {
         public int Id { get; set; }
         [Required]

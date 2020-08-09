@@ -1,9 +1,8 @@
 ﻿using System;
-using ToDoList.Business.Services.ToDoList;
 
-namespace ToDoList.Business.Models.ToDoList
+namespace ToDoList.Data.Models.ToDoList
 {
-    public class CategoryDao : IHasId
+    public class CategoryDao
     {
         public int Id { get; set; }
         public string Name { get; set; }

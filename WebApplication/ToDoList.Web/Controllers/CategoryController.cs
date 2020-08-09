@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ToDoList.Business.Models.ToDoList;
+using ToDoList.Business.Models;
 using ToDoList.Business.Services.ToDoList;
+using ToDoList.Business.Profiles;
+using ToDoList.Data.Models.ToDoList;
 using ToDoList.Web.Models;
 using ToDoList.Web.ViewModel.ToDoList;
 
@@ -12,9 +14,9 @@ namespace ToDoList.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IProviderAsync<CategoryDao> categoryProvider;
+        private readonly IProviderAsync<Category> categoryProvider;
         private readonly IMapper mapper;
-        public CategoryController(IProviderAsync<CategoryDao> categoryProvider, IMapper mapper)
+        public CategoryController(IProviderAsync<Category> categoryProvider, IMapper mapper)
         {
             this.categoryProvider = categoryProvider;
             this.mapper = mapper;
@@ -22,7 +24,7 @@ namespace ToDoList.Web.Controllers
         // GET: CategoryController
         public async Task<IActionResult> Index()
         {
-            return View(mapper.Map<IEnumerable<CategoryViewModel>>(await categoryProvider.GetAllAsync()));
+            return View(mapper.Map< IEnumerable < Category > ,IEnumerable <CategoryViewModel>>(await categoryProvider.GetAllAsync()));
         }
 
         // GET: CategoryController/Details/5
@@ -45,11 +47,11 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
              if (ModelState.IsValid)
               {
-                    await categoryProvider.AddAsync(category);
+                    await categoryProvider.AddAsync(mapper.Map<Category>(category));
                     return RedirectToAction(nameof(Index));
              }
             return View(mapper.Map<CategoryViewModel>(category));
@@ -69,7 +71,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
         {
             if (id != category.Id)
             {
@@ -113,7 +115,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(CategoryDao category)
+        public async Task<IActionResult> DeleteConfirmed(Category category)
         {
             try
             {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDoList.Business.Models.ToDoList;
+using ToDoList.Data.Models.ToDoList;
 
-namespace ToDoList.Business.Data
+namespace ToDoList.Data.Data
 {
     public class WebApplicationContext : DbContext
     {

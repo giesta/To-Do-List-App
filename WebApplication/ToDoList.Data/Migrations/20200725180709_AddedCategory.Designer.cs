@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using ToDoList.Business.Data;
+using ToDoList.Data.Data;
 
-namespace ToDoList.Business.Migrations
+namespace ToDoList.Data.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
     [Migration("20200725180709_AddedCategory")]

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ToDoList.Business.Services.ToDoList;
 
-namespace ToDoList.Business.Models.ToDoList
+namespace ToDoList.Data.Models.ToDoList
 {
-    public class TagDao : IHasId
+    public class TagDao
     {
         public int Id { get; set; }
         public string Name { get; set; }

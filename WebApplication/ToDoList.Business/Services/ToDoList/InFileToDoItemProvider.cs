@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ToDoList.Business.Models.ToDoList;
 using ToDoList.Business.Services.ToDoList;
+using ToDoList.Data.Models.ToDoList;
 
 namespace ToDoList.Web.Services.ToDoList
 {
