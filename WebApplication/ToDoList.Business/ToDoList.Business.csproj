@@ -19,4 +19,10 @@
     <ProjectReference Include="..\ToDoList.Data\ToDoList.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Models\ToDoList\" />
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using ToDoList.Business.Models.ToDoList;
 using ToDoList.Business.Services.ToDoList;
-using ToDoList.Business.Models;
 
 namespace ToDoList.Web.Services.ToDoList
 {
