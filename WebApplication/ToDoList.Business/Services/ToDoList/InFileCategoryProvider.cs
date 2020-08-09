@@ -9,10 +9,10 @@ namespace ToDoList.Business.Services.ToDoList
     public class InFileCategoryProvider : ICategoryProvider
     {
         private readonly string fileName = "category.txt";
-        public void Add(CategoryDao category)
+        public void Add(CategoryDao categoryDao)
         {
-            category.Id = GetUniqueId();
-            WriteToFile(category);
+            categoryDao.Id = GetUniqueId();
+            WriteToFile(categoryDao);
         }
 
         public CategoryDao Get(int id)
@@ -30,9 +30,9 @@ namespace ToDoList.Business.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(CategoryDao category)
+        public void Remove(CategoryDao categoryDao)
         {
-            RemoveFromFileById(category.Id);
+            RemoveFromFileById(categoryDao.Id);
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace ToDoList.Business.Services.ToDoList
         /// <summary>
         /// Write a category into the file
         /// </summary>
-        private void WriteToFile(CategoryDao category)
+        private void WriteToFile(CategoryDao categoryDao)
         {
             using (StreamWriter writer = new StreamWriter(fileName, true))
             {
-                writer.WriteLine(category.Id + ";" + category.Name);
+                writer.WriteLine(categoryDao.Id + ";" + categoryDao.Name);
             }
         }
         /// <summary>
@@ -135,7 +135,7 @@ namespace ToDoList.Business.Services.ToDoList
         private CategoryDao GetFromFileById(int id)
         {
             string[] lines;
-            CategoryDao category = null;
+            CategoryDao categoryDao = null;
             var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -145,13 +145,13 @@ namespace ToDoList.Business.Services.ToDoList
                     lines = line.Split(";");
                     if (Int16.Parse(lines[0]) == id)
                     {
-                        category = new CategoryDao() { Id = Int16.Parse(lines[0]), Name = lines[1] };
-                        return category;
+                        categoryDao = new CategoryDao() { Id = Int16.Parse(lines[0]), Name = lines[1] };
+                        return categoryDao;
                     }
 
                 }
             }
-            return category;
+            return categoryDao;
         }
         /// <summary>
         /// Remove a category from the file by ID
@@ -179,10 +179,10 @@ namespace ToDoList.Business.Services.ToDoList
             RewriteFiles();
         }
 
-        public void Update(CategoryDao category)
+        public void Update(CategoryDao categoryDao)
         {
-            RemoveFromFileById(category.Id);
-            WriteToFile(category);
+            RemoveFromFileById(categoryDao.Id);
+            WriteToFile(categoryDao);
         }
     }
 }

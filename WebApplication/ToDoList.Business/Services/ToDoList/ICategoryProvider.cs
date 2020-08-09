@@ -7,9 +7,9 @@ namespace ToDoList.Business.Services.ToDoList
     {
         List<CategoryDao> GetAll();
         CategoryDao Get(int id);
-        void Add(CategoryDao category);
+        void Add(CategoryDao categoryDao);
         int GetIndexToInsert();
-        void Remove(CategoryDao category);
-        void Update(CategoryDao category);
+        void Remove(CategoryDao categoryDao);
+        void Update(CategoryDao categoryDao);
     }
 }

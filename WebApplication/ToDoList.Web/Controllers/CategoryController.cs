@@ -40,14 +40,14 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao categoryDao)
         {
              if (ModelState.IsValid)
               {
-                    await categoryProvider.AddAsync(category);
+                    await categoryProvider.AddAsync(categoryDao);
                     return RedirectToAction(nameof(Index));
              }
-            return View(category);
+            return View(categoryDao);
         }
 
         // GET: CategoryController/Edit/5
@@ -64,9 +64,9 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao categoryDao)
         {
-            if (id != category.Id)
+            if (id != categoryDao.Id)
             {
                 return NotFound();
             }
@@ -75,11 +75,11 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    await categoryProvider.UpdateAsync(category);
+                    await categoryProvider.UpdateAsync(categoryDao);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!CategoryExists(categoryDao.Id))
                     {
                         return NotFound();
                     }
@@ -90,7 +90,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(categoryDao);
         }
 
         // GET: CategoryController/Delete/5
@@ -108,16 +108,16 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(CategoryDao category)
+        public async Task<IActionResult> DeleteConfirmed(CategoryDao categoryDao)
         {
             try
             {
-                await categoryProvider.RemoveAsync(category);
+                await categoryProvider.RemoveAsync(categoryDao);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(category);
+                return View(categoryDao);
             }
             
         }

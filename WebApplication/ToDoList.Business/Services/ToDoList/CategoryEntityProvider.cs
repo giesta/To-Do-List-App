@@ -14,9 +14,9 @@ namespace ToDoList.Business.Services.ToDoList
         {
             this.context = context;
         }
-        public async Task AddAsync(CategoryDao category)
+        public async Task AddAsync(CategoryDao categoryDao)
         {
-            context.Add(category);
+            context.Add(categoryDao);
             await context.SaveChangesAsync();
         }
 
@@ -30,15 +30,15 @@ namespace ToDoList.Business.Services.ToDoList
             return await context.Category.ToListAsync();
         }
 
-        public async Task RemoveAsync(CategoryDao category)
+        public async Task RemoveAsync(CategoryDao categoryDao)
         {
-            context.Category.Remove(category);
+            context.Category.Remove(categoryDao);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(CategoryDao category)
+        public async Task UpdateAsync(CategoryDao categoryDao)
         {
-            context.Update(category);
+            context.Update(categoryDao);
             await context.SaveChangesAsync();
         }
     }

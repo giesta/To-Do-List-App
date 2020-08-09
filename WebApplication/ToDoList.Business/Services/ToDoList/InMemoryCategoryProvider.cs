@@ -6,10 +6,10 @@ namespace ToDoList.Business.Services.ToDoList
     public class InMemoryCategoryProvider : ICategoryProvider
     {
         static private List<CategoryDao> dataPile = new List<CategoryDao>();
-        public void Add(CategoryDao category)
+        public void Add(CategoryDao categoryDao)
         {
-            category.Id = GetUniqueId();
-            dataPile.Add(category);
+            categoryDao.Id = GetUniqueId();
+            dataPile.Add(categoryDao);
         }
 
         public CategoryDao Get(int id)
@@ -27,15 +27,15 @@ namespace ToDoList.Business.Services.ToDoList
             return GetUniqueId();
         }
 
-        public void Remove(CategoryDao category)
+        public void Remove(CategoryDao categoryDao)
         {
-            dataPile.Remove(category);
+            dataPile.Remove(categoryDao);
         }
 
-        public void Update(CategoryDao category)
+        public void Update(CategoryDao categoryDao)
         {
-            dataPile.Remove(category);
-            dataPile.Add(category);
+            dataPile.Remove(categoryDao);
+            dataPile.Add(categoryDao);
         }
 
         /// <summary>

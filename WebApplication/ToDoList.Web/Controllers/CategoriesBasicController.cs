@@ -52,15 +52,15 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryDao categoryDao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(categoryDao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(categoryDao);
         }
 
         // GET: CategoriesBasic/Edit/5
@@ -84,9 +84,9 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CategoryDao categoryDao)
         {
-            if (id != category.Id)
+            if (id != categoryDao.Id)
             {
                 return NotFound();
             }
@@ -95,12 +95,12 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(categoryDao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!CategoryExists(categoryDao.Id))
                     {
                         return NotFound();
                     }
@@ -111,7 +111,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(categoryDao);
         }
 
         // GET: CategoriesBasic/Delete/5
