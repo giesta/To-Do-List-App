@@ -47,7 +47,7 @@ namespace ToDoList.Web.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CategoryViewModel category)
         {
              if (ModelState.IsValid)
               {

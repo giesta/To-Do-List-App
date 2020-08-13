@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using ToDoList.Business.Models;
 using ToDoList.Data.Models.ToDoList;
+using ToDoList.Web.ViewModel.ToDoList;
 
-namespace ToDoList.Web.ViewModel.ToDoList
+namespace ToDoList.Web.Profiles.ToDoList
 {
     public class TagViewModelProfile:Profile
     {
         public TagViewModelProfile()
         {
-            CreateMap<TagDao, TagViewModel>();
+            CreateMap<Tag, TagViewModel>().ReverseMap();
+            CreateMap<TagDao, Tag>().ReverseMap();
         }
     }
 }

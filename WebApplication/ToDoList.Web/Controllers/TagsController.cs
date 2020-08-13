@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ToDoList.Business.Models;
 using ToDoList.Business.Services.ToDoList;
 using ToDoList.Data.Data;
 using ToDoList.Data.Models.ToDoList;
@@ -15,10 +16,10 @@ namespace ToDoList.Web.Controllers
 {
     public class TagsController : Controller
     {
-        private readonly IProviderAsync<TagDao> tagProvider;
-        private readonly IProviderAsync<ToDoItemDao> toDoItemProvider;
+        private readonly IProviderAsync<Tag> tagProvider;
+        private readonly IProviderAsync<ToDoItem> toDoItemProvider;
         private readonly IMapper mapper;
-        public TagsController(IProviderAsync<TagDao> tagProvider, IProviderAsync<ToDoItemDao> toDoItemProvider, WebApplicationContext context, IMapper mapper)
+        public TagsController(IProviderAsync<Tag> tagProvider, IProviderAsync<ToDoItem> toDoItemProvider, WebApplicationContext context, IMapper mapper)
         {
             this.tagProvider = tagProvider;
             this.toDoItemProvider = toDoItemProvider;
@@ -54,19 +55,19 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TagDao tag, int[] ToDoItems)
+        public async Task<IActionResult> Create(TagViewModel tag, int[] ToDoItems)
         {
-            tag.TagToDoItems = new List<TagToDoItemDao>();
+            mapper.Map<Tag>(tag).TagToDoItems = new List<TagToDoItem>();
             
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItemDao tagToDoItemDao = new TagToDoItemDao { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    tag.TagToDoItems.Add(tagToDoItemDao);
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
+                    mapper.Map<Tag>(tag).TagToDoItems.Add(tagToDoItem);
                 }
 
-                await tagProvider.AddAsync(tag);
+                await tagProvider.AddAsync(mapper.Map<Tag>(tag));
                 return RedirectToAction(nameof(Index));
             }
             return View(mapper.Map<TagViewModel>(tag));
@@ -91,25 +92,25 @@ namespace ToDoList.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, TagDao tag, int[] ToDoItems)
+        public async Task<IActionResult> Edit(int id, TagViewModel tag, int[] ToDoItems)
         {
             if (id != tag.Id)
             {
                 return NotFound();
             }
-            
-            tag.TagToDoItems = new List<TagToDoItemDao>();
-            await tagProvider.UpdateAsync(tag);
+
+            mapper.Map<Tag>(tag).TagToDoItems = new List<TagToDoItem>();
+            await tagProvider.UpdateAsync(mapper.Map<Tag>(tag));
             if (ModelState.IsValid)
             {
                 foreach (var toDoItemID in ToDoItems)
                 {
-                    TagToDoItemDao tagToDoItemDao = new TagToDoItemDao { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    tag.TagToDoItems.Add(tagToDoItemDao);
+                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
+                    mapper.Map<Tag>(tag).TagToDoItems.Add(tagToDoItem);
                 }
                 try
                 {
-                    await tagProvider.UpdateAsync(tag);
+                    await tagProvider.UpdateAsync(mapper.Map<Tag>(tag));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +125,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(mapper.Map<TagViewModel>(tag));
+            return View(tag);
         }
 
         // GET: Tags/Delete/5
@@ -142,16 +143,16 @@ namespace ToDoList.Web.Controllers
         // POST: Tags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(TagDao tag)
+        public async Task<IActionResult> DeleteConfirmed(TagViewModel tag)
         {
             try
             {
-                await tagProvider.RemoveAsync(tag);
+                await tagProvider.RemoveAsync(mapper.Map<Tag>(tag));
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(mapper.Map<TagViewModel>(tag));
+                return View(tag);
             }
 
         }

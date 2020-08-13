@@ -1,53 +1,57 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ToDoList.Business.Models;
 using ToDoList.Data.Data;
 using ToDoList.Data.Models.ToDoList;
 
 namespace ToDoList.Business.Services.ToDoList
 {
-    public class TagEntityProvider : IProviderAsync<TagDao>
+    public class TagEntityProvider : IProviderAsync<Tag>
     {
         private readonly WebApplicationContext context;
-        public TagEntityProvider(WebApplicationContext context)
+        private readonly IMapper mapper;
+        public TagEntityProvider(WebApplicationContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
-        public async Task AddAsync(TagDao tagDao)
+        public async Task AddAsync(Tag tag)
         {            
-            context.Add(tagDao);
+            context.Add(mapper.Map < TagDao > (tag));
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<TagDao>> GetAllAsync()
+        public async Task<List<Tag>> GetAllAsync()
         {
-            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t => t.ToDoItemDao).AsNoTracking().ToListAsync();
+            return mapper.Map<List<TagDao>, List<Tag>>(await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t => t.ToDoItemDao).AsNoTracking().ToListAsync());
         }
 
-        public async Task<TagDao> GetAsync(int id)
+        public async Task<Tag> GetAsync(int id)
         {
-            return await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t=>t.ToDoItemDao).AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+            return mapper.Map< Tag > (source: await context.Tag.Include(t => t.TagToDoItems).ThenInclude(t=>t.ToDoItemDao).AsNoTracking().FirstOrDefaultAsync(m => m.Id == id));
         }
 
-        public async Task RemoveAsync(TagDao tagDao)
+        public async Task RemoveAsync(Tag tag)
         {
-            context.Remove(tagDao);
+            context.Remove(mapper.Map<TagDao>(tag));
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(TagDao tagDao)
+        public async Task UpdateAsync(Tag tag)
         {
-           
-            List<TagToDoItemDao> tagToDoItems = context.TagToDoItem.Where(t=>t.TagId==tagDao.Id).ToList();
-            if(tagToDoItems!= null)
+
+            List<TagToDoItem> tagToDoItems = mapper.Map<List<TagToDoItem>>(context.TagToDoItem.Where(t => t.TagId == tag.Id).ToList());
+            if (tagToDoItems != null)
             {
-                foreach(TagToDoItemDao tagToDoItem in tagToDoItems)
-                 {
+                foreach (TagToDoItem tagToDoItem in tagToDoItems)
+                {
                     context.Remove(tagToDoItem);
-                 }
-            }            
-            context.Update(tagDao);
+                }
+            }
+            context.Update(mapper.Map<TagDao>(tag));
             await context.SaveChangesAsync();
         }
     }

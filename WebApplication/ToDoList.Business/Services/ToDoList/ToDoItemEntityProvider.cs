@@ -1,45 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ToDoList.Business.Models;
 using ToDoList.Data.Data;
 using ToDoList.Data.Models.ToDoList;
 
 namespace ToDoList.Business.Services.ToDoList
 {
-    public class ToDoItemEntityProvider : IProviderAsync<ToDoItemDao>
+    public class ToDoItemEntityProvider : IProviderAsync<ToDoItem>
     {
         private readonly WebApplicationContext context;
-        public ToDoItemEntityProvider(WebApplicationContext context)
+        private readonly IMapper mapper;
+        public ToDoItemEntityProvider(WebApplicationContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
-        public async Task AddAsync(ToDoItemDao toDoItemDao)
+        public async Task AddAsync(ToDoItem toDoItem)
         {
-            toDoItemDao.CreationDate = DateTime.UtcNow;
-            context.Add(toDoItemDao);
+            toDoItem.CreationDate = DateTime.UtcNow;
+            context.Add(mapper.Map<ToDoItemDao>(toDoItem));
             await context.SaveChangesAsync();
         }
 
-        public async Task<ToDoItemDao> GetAsync(int id)
+        public async Task<ToDoItem> GetAsync(int id)
         {
-            return await context.ToDoItem.Include(t => t.Category).FirstOrDefaultAsync(m => m.Id == id);
+            return mapper.Map<ToDoItem>(await context.ToDoItem.Include(t => t.Category).FirstOrDefaultAsync(m => m.Id == id));
         }
 
-        public async Task<List<ToDoItemDao>> GetAllAsync()
+        public async Task<List<ToDoItem>> GetAllAsync()
         {
-            return await context.ToDoItem.Include(t => t.Category).ToListAsync();
+            return mapper.Map <List<ToDoItemDao>, List<ToDoItem>> (await context.ToDoItem.Include(t => t.Category).ToListAsync());
         }
 
-        public async Task RemoveAsync(ToDoItemDao toDoItemDao)
+        public async Task RemoveAsync(ToDoItem toDoItem)
         {
-            context.ToDoItem.Remove(toDoItemDao);
+            context.ToDoItem.Remove(mapper.Map < ToDoItemDao > (toDoItem));
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(ToDoItemDao toDoItemDao)
+        public async Task UpdateAsync(ToDoItem toDoItem)
         {
-            context.Update(toDoItemDao);
+            context.Update(mapper.Map < ToDoItemDao > (toDoItem));
            await context.SaveChangesAsync();
         }
     }

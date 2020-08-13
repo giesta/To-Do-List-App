@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ToDoList.Business.Models;
+using ToDoList.Business.Services.ToDoList;
 using ToDoList.Data.Models.ToDoList;
 
-namespace ToDoList.Web.ViewModel.ToDoList
+namespace ToDoList.Business.Models
 {
-    public class ToDoItemViewModel
+    public class ToDoItem:IHasId
     {
         public int Id { get; set; }
         [Required]
@@ -33,15 +33,15 @@ namespace ToDoList.Web.ViewModel.ToDoList
         public int? CategoryID { get; set; }
         [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "Uncategorized")]
         [DefaultValue(null)]
-        public virtual CategoryDao? Category { get; set; }
+        public virtual Category? Category { get; set; }
         #nullable disable
         [DefaultValue("Backlog")]
         public StatusName Status { get; set; }
 
-        public IList<TagToDoItemDao> TagToDoItems { get; set; }
+        public IList<TagToDoItem> TagToDoItems { get; set; }
         public override bool Equals(object obj)
         {
-            return obj is ToDoItemViewModel item &&
+            return obj is ToDoItem item &&
                    Id == item.Id;
         }
 

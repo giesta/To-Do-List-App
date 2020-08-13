@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ToDoList.Business.Models;
 using ToDoList.Business.Services.ToDoList;
 using ToDoList.Data.Models.ToDoList;
 using ToDoList.Web.Models;
@@ -14,10 +15,10 @@ namespace ToDoList.Web.Controllers
     public class ToDoItemsController : Controller
     {
         
-        private readonly IProviderAsync<ToDoItemDao> toDoItemProvider;
-        private readonly IProviderAsync<CategoryDao> categoryProvider;
+        private readonly IProviderAsync<ToDoItem> toDoItemProvider;
+        private readonly IProviderAsync<Category> categoryProvider;
         private readonly IMapper mapper;
-        public ToDoItemsController(IProviderAsync<ToDoItemDao> toDoItemProvider, IProviderAsync<CategoryDao> categoryProvider, IMapper mapper)
+        public ToDoItemsController(IProviderAsync<ToDoItem> toDoItemProvider, IProviderAsync<Category> categoryProvider, IMapper mapper)
         {
             this.toDoItemProvider = toDoItemProvider;
             this.categoryProvider = categoryProvider;
@@ -51,14 +52,14 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemDao toDoItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemViewModel toDoItem)
         {
             if (ModelState.IsValid)
             {
-                await toDoItemProvider.AddAsync(toDoItem);
+                await toDoItemProvider.AddAsync(mapper.Map<ToDoItem>(toDoItem));
                 return RedirectToAction(nameof(Index));
             }
-            return View(mapper.Map<ToDoItemViewModel>(toDoItem));
+            return View(toDoItem);
         }
 
         // GET: ToDoItemController/Edit/5
@@ -76,7 +77,7 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemDao toDoItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreationDate,DeadLineDate,Priority,Status, CategoryID")] ToDoItemViewModel toDoItem)
         {
             if (id != toDoItem.Id)
             {
@@ -87,7 +88,7 @@ namespace ToDoList.Web.Controllers
             {
                 try
                 {
-                    await toDoItemProvider.UpdateAsync(toDoItem);
+                    await toDoItemProvider.UpdateAsync(mapper.Map<ToDoItem>(toDoItem));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -102,7 +103,7 @@ namespace ToDoList.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(mapper.Map<ToDoItemViewModel>(toDoItem));
+            return View(toDoItem);
         }
 
         // GET: ToDoItemController/Delete/5
@@ -120,16 +121,16 @@ namespace ToDoList.Web.Controllers
         // POST: ToDoItemController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(ToDoItemDao toDoItem)
+        public async Task<IActionResult> DeleteConfirmed(ToDoItemViewModel toDoItem)
         {
             try
             {
-                await toDoItemProvider.RemoveAsync(toDoItem);
+                await toDoItemProvider.RemoveAsync(mapper.Map<ToDoItem>(toDoItem));
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(mapper.Map<ToDoItemViewModel>(toDoItem));
+                return View(toDoItem);
             }
             
         }
