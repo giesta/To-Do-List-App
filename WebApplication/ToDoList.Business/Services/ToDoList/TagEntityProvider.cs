@@ -48,7 +48,7 @@ namespace ToDoList.Business.Services.ToDoList
             {
                 foreach (TagToDoItem tagToDoItem in tagToDoItems)
                 {
-                    context.Remove(tagToDoItem);
+                    context.Remove(mapper.Map<TagToDoItemDao>(tagToDoItem));
                 }
             }
             context.Update(mapper.Map<TagDao>(tag));

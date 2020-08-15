@@ -61,12 +61,6 @@ namespace ToDoList.Web.Controllers
             
             if (ModelState.IsValid)
             {
-                foreach (var toDoItemID in ToDoItems)
-                {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    mapper.Map<Tag>(tag).TagToDoItems.Add(tagToDoItem);
-                }
-
                 await tagProvider.AddAsync(mapper.Map<Tag>(tag));
                 return RedirectToAction(nameof(Index));
             }
@@ -77,8 +71,6 @@ namespace ToDoList.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var tag = await tagProvider.GetAsync(id);
-            List<int> selectedToDoItems = (await tagProvider.GetAsync(id)).TagToDoItems.Where(m => m.TagId == tag.Id).Select(a => a.ToDoItemId).ToList();
-            ViewBag.ToDoItems = new MultiSelectList(await toDoItemProvider.GetAllAsync(), "Id", "Name", selectedToDoItems);
             
             if (tag == null)
             {
@@ -100,14 +92,8 @@ namespace ToDoList.Web.Controllers
             }
 
             mapper.Map<Tag>(tag).TagToDoItems = new List<TagToDoItem>();
-            await tagProvider.UpdateAsync(mapper.Map<Tag>(tag));
             if (ModelState.IsValid)
             {
-                foreach (var toDoItemID in ToDoItems)
-                {
-                    TagToDoItem tagToDoItem = new TagToDoItem { ToDoItemId = toDoItemID, TagId = tag.Id };
-                    mapper.Map<Tag>(tag).TagToDoItems.Add(tagToDoItem);
-                }
                 try
                 {
                     await tagProvider.UpdateAsync(mapper.Map<Tag>(tag));

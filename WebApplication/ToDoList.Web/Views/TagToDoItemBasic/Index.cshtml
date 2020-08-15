@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ToDoList.Data.Models.ToDoList.TagToDoItemDao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TagDao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoItemDao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TagDao.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDoItemDao.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { tagId = item.TagId, toDoItemId = item.ToDoItemId }) |
+                @Html.ActionLink("Details", "Details", new { tagId = item.TagId, toDoItemId = item.ToDoItemId }) |
+                @Html.ActionLink("Delete", "Delete", new { tagId = item.TagId, toDoItemId = item.ToDoItemId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
