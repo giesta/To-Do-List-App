@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ToDoList.Data.IntegrationTests
 {
-    public class UnitTest1
+    public class CategoryTest
     {
         [Fact]
         public void Test1()
