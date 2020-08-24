@@ -9,7 +9,7 @@ namespace ToDoList.Business.Profiles
     {
         public CategoryProfile()
         {
-            //CreateMap<CategoryDao, Category>().ReverseMap();
+            CreateMap<CategoryDao, Category>().ReverseMap();
         }
     }
 }
