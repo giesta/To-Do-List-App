@@ -10,7 +10,7 @@ namespace ToDoList.Web.Profiles.ToDoList
         public TagToDoItemViewModelProfile()
         {
             CreateMap<TagToDoItem, TagToDoItemViewModel>().ReverseMap();
-            CreateMap<TagToDoItemDao, TagToDoItem>().ReverseMap();
+            //CreateMap<TagToDoItemDao, TagToDoItem>().ReverseMap();
         }
     }
 }

@@ -9,7 +9,6 @@ namespace ToDoList.Web.Profiles.ToDoList
     {
         public ToDoItemViewModelProfile()
         {
-            CreateMap<ToDoItemDao, ToDoItem>().ReverseMap();
             CreateMap<ToDoItem, ToDoItemViewModel>().ReverseMap();
         }
     }

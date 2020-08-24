@@ -9,8 +9,8 @@ namespace ToDoList.Web.Profiles.ToDoList
     {
         public CategoryViewModelProfile()
         {
-            CreateMap<Category, CategoryViewModel>();
-            CreateMap<CategoryDao, Category>().ReverseMap();
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
+            //CreateMap<CategoryDao, Category>().ReverseMap();
         }
     }
 }
