@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Project.Data", "To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Project.Api.Tests", "ToDoList.Project.Api.Tests\ToDoList.Project.Api.Tests.csproj", "{33788262-7C4E-4567-B475-2EEF6C5EA6D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Project.Api", "ToDoList.Project.Api\ToDoList.Project.Api.csproj", "{FB2B4956-4A48-47DA-97DC-581737648EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.ProjectManage.Api", "ToDoList.Project.Api\ToDoList.ProjectManage.Api.csproj", "{FB2B4956-4A48-47DA-97DC-581737648EF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}"
 EndProject

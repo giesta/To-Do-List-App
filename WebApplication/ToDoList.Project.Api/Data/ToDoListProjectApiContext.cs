@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ToDoList.Project.Api.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDoList.ProjectManage.Api.Model;
 
-namespace ToDoList.Project.Api.Data
+namespace ToDoList.ProjectManage.Api.Data
 {
     public class ToDoListProjectApiContext : DbContext
     {
@@ -14,6 +10,8 @@ namespace ToDoList.Project.Api.Data
         {
         }
 
-        public DbSet<ToDoList.Project.Api.Model.Client> Client { get; set; }
+        public DbSet<Client> Client { get; set; }
+
+        public DbSet<Project> Project { get; set; }
     }
 }

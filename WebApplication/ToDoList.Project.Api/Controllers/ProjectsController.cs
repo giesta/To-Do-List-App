@@ -10,48 +10,48 @@ namespace ToDoList.ProjectManage.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly ToDoListProjectApiContext _context;
 
-        public ClientsController(ToDoListProjectApiContext context)
+        public ProjectsController(ToDoListProjectApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Clients
+        // GET: api/Projects
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClient()
+        public async Task<ActionResult<IEnumerable<Project>>> GetProject()
         {
-            return await _context.Client.ToListAsync();
+            return await _context.Project.ToListAsync();
         }
 
-        // GET: api/Clients/5
+        // GET: api/Projects/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Client>> GetClient(int id)
+        public async Task<ActionResult<Project>> GetProject(int id)
         {
-            var client = await _context.Client.FindAsync(id);
+            var project = await _context.Project.FindAsync(id);
 
-            if (client == null)
+            if (project == null)
             {
                 return NotFound();
             }
 
-            return client;
+            return project;
         }
 
-        // PUT: api/Clients/5
+        // PUT: api/Projects/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClient(int id, Client client)
+        public async Task<IActionResult> PutProject(int id, Project project)
         {
-            if (id != client.Id)
+            if (id != project.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(client).State = EntityState.Modified;
+            _context.Entry(project).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace ToDoList.ProjectManage.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClientExists(id))
+                if (!ProjectExists(id))
                 {
                     return NotFound();
                 }
@@ -72,37 +72,37 @@ namespace ToDoList.ProjectManage.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Clients
+        // POST: api/Projects
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(Client client)
+        public async Task<ActionResult<Project>> PostProject(Project project)
         {
-            _context.Client.Add(client);
+            _context.Project.Add(project);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClient", new { id = client.Id }, client);
+            return CreatedAtAction("GetProject", new { id = project.Id }, project);
         }
 
-        // DELETE: api/Clients/5
+        // DELETE: api/Projects/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Client>> DeleteClient(int id)
+        public async Task<ActionResult<Project>> DeleteProject(int id)
         {
-            var client = await _context.Client.FindAsync(id);
-            if (client == null)
+            var project = await _context.Project.FindAsync(id);
+            if (project == null)
             {
                 return NotFound();
             }
 
-            _context.Client.Remove(client);
+            _context.Project.Remove(project);
             await _context.SaveChangesAsync();
 
-            return client;
+            return project;
         }
 
-        private bool ClientExists(int id)
+        private bool ProjectExists(int id)
         {
-            return _context.Client.Any(e => e.Id == id);
+            return _context.Project.Any(e => e.Id == id);
         }
     }
 }
