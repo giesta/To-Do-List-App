@@ -44,5 +44,25 @@ namespace ToDoList.ProjectManage.Api.Controllers
 
             return Ok();
         }
+        // DELETE: api/Clients/5
+        [HttpDelete("{projectId}")]
+        public async Task<ActionResult> DeleteProject(int clientId, int projectId)
+        {
+            var client = await _context.Client.FirstAsync(m=>m.Id == clientId);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            var project = client.Projects.FirstOrDefault(m => m.Id == projectId);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            _context.Entry(project).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

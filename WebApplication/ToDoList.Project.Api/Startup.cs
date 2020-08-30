@@ -21,6 +21,7 @@ namespace ToDoList.ProjectManage.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerGen();
 
             services.AddDbContext<ToDoListProjectApiContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ToDoListProjectApiContext")));
@@ -33,6 +34,9 @@ namespace ToDoList.ProjectManage.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Api V1"));
 
             app.UseHttpsRedirection();
 
