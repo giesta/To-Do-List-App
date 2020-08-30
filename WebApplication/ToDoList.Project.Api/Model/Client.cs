@@ -9,7 +9,7 @@ namespace ToDoList.ProjectManage.Api.Model
         public string Name { get; set; }
         public string Address { get; set; }
 
-        public IEnumerable<Project>Projects { get; set; }
+        public ICollection<Project>Projects { get; set; }
 
     }
 }

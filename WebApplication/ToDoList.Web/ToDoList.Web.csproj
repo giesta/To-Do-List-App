@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ToDoList.Business\ToDoList.Business.csproj" />
     <ProjectReference Include="..\ToDoList.Commons\ToDoList.Commons.csproj" />
+    <ProjectReference Include="..\ToDoList.ProjectManage.ApiClient\ToDoList.ProjectManage.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>

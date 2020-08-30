@@ -44,22 +44,24 @@ namespace ToDoList.ProjectManage.Api.Controllers
 
             return Ok();
         }
-        // DELETE: api/Clients/5
+        
+       
         [HttpDelete("{projectId}")]
-        public async Task<ActionResult> DeleteProject(int clientId, int projectId)
+        public async Task<IActionResult> DeleteClient(int clientId, int projectId)
         {
-            var client = await _context.Client.FirstAsync(m=>m.Id == clientId);
+            var client = await _context.Client.FindAsync(clientId);
             if (client == null)
             {
                 return NotFound();
             }
 
-            var project = client.Projects.FirstOrDefault(m => m.Id == projectId);
+            var project = _context.Project.Where(m => m.Id == projectId).First();
             if (project == null)
             {
                 return NotFound();
             }
-            _context.Entry(project).State = EntityState.Modified;
+            client.Projects.Remove(project);
+            _context.Entry(client).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return Ok();
