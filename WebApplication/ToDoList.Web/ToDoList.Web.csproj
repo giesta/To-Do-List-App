@@ -21,4 +21,8 @@
     <ProjectReference Include="..\ToDoList.ProjectManage.ApiClient\ToDoList.ProjectManage.ApiClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>
