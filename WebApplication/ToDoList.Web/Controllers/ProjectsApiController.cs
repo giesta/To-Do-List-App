@@ -9,26 +9,24 @@ using ToDoList.ProjectManage.ApiClient;
 
 namespace ToDoList.Web.Controllers
 {
-    public class ClientsApiController : Controller
+    public class ProjectsApiController : Controller
     {
         private readonly ApiClient _projectManageApi;
 
-        public ClientsApiController(ApiClient projectManageApi)
+        public ProjectsApiController(ApiClient projectManageApi)
         {
             _projectManageApi = projectManageApi;
         }
-        // GET: ClientsApi
+        // GET: ProjectsApi
         public async Task<IActionResult> Index()
         {
-            return View(await _projectManageApi.ClientsGetAsync());
+            return View(await _projectManageApi.ProjectsGetAsync());
         }
 
-        // GET: ClientsApi/Details/5
+        
         public async Task<IActionResult> Details(int id)
         {
-            return View(await _projectManageApi.ClientsGetAsync(id));
+            return View(await _projectManageApi.ProjectsGetAsync(id));
         }
-
-       
     }
 }

@@ -23,7 +23,7 @@ namespace ToDoList.ProjectManage.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetProject()
         {
-            return await _context.Project.ToListAsync();
+            return await _context.Project.Include(m=>m.Client).ToListAsync();
         }
 
         // GET: api/Projects/5
