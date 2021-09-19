@@ -9,6 +9,7 @@ using ToDoList.Business.Models;
 using ToDoList.Business.Services.ToDoList;
 using ToDoList.Data.Data;
 using ToDoList.Data.Models.ToDoList;
+using ToDoList.ProjectManage.ApiClient;
 using ToDoList.Web.Models;
 
 namespace ToDoList.Web
@@ -35,7 +36,9 @@ namespace ToDoList.Web
             services.AddSingleton(mapper);
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); 
             //services.AddSingleton<IGenericProvider<Category>>(new InFileGenericProvider<Category>("category.json"));
             //services.AddSingleton<IGenericProvider<ToDoItem>>(new InFileGenericProvider<ToDoItem>("toDoItem.json"));
             //services.AddSingleton<IToDoItemProvider, InFileToDoItemProvider>();
@@ -47,6 +50,8 @@ namespace ToDoList.Web
             services.AddTransient<IProviderAsync<Category>, CategoryEntityProvider>();
             services.AddTransient<IProviderAsync<ToDoItem>, ToDoItemEntityProvider>();
             services.AddTransient<IProviderAsync<Tag>, TagEntityProvider>();
+            services.AddSingleton(new ApiClient("https://localhost:44327"));
+                
             services.AddDbContext<WebApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplicationContext")));
         }

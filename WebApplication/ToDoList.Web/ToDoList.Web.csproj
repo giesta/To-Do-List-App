@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
@@ -18,6 +19,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ToDoList.Business\ToDoList.Business.csproj" />
     <ProjectReference Include="..\ToDoList.Commons\ToDoList.Commons.csproj" />
+    <ProjectReference Include="..\ToDoList.ProjectManage.ApiClient\ToDoList.ProjectManage.ApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>
