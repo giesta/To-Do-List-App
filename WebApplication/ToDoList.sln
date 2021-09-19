@@ -5,23 +5,33 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Web", "ToDoList.Web\ToDoList.Web.csproj", "{82FB5104-93CC-49A0-9348-A62AFCF27406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Data", "ToDoList.Data\ToDoList.Data.csproj", "{8D82F765-9690-49D0-A793-975732072863}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Data", "ToDoList.Data\ToDoList.Data.csproj", "{8D82F765-9690-49D0-A793-975732072863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Business", "ToDoList.Business\ToDoList.Business.csproj", "{7AABE53F-DC2E-482F-8DD5-9C4580EE3066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Business", "ToDoList.Business\ToDoList.Business.csproj", "{7AABE53F-DC2E-482F-8DD5-9C4580EE3066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Business.Tests", "ToDoList.Business.Test\ToDoList.Business.Tests.csproj", "{19CED607-72B8-48F8-AB1F-60E7B3225FAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Business.Tests", "ToDoList.Business.Test\ToDoList.Business.Tests.csproj", "{19CED607-72B8-48F8-AB1F-60E7B3225FAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Data.Tests", "ToDoList.Data.Tests\ToDoList.Data.Tests.csproj", "{244A6875-F1CF-4548-A6AD-5E74470E9827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Data.Tests", "ToDoList.Data.Tests\ToDoList.Data.Tests.csproj", "{244A6875-F1CF-4548-A6AD-5E74470E9827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Web.Tests", "ToDoList.Web.Tests\ToDoList.Web.Tests.csproj", "{7DAC23D8-A1E2-4FF2-9C2C-89D9B6429B86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Web.Tests", "ToDoList.Web.Tests\ToDoList.Web.Tests.csproj", "{7DAC23D8-A1E2-4FF2-9C2C-89D9B6429B86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Data.IntegrationTests", "ToDoList.Data.IntegrationTests\ToDoList.Data.IntegrationTests.csproj", "{5ABE56DE-FFA0-4307-A83A-C09C19A46998}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Data.IntegrationTests", "ToDoList.Data.IntegrationTests\ToDoList.Data.IntegrationTests.csproj", "{5ABE56DE-FFA0-4307-A83A-C09C19A46998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Web.AutomatedTests", "ToDoList.Web.AutomatedTests\ToDoList.Web.AutomatedTests.csproj", "{00BB5939-5105-492C-A67E-85B428B0BF0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Web.AutomatedTests", "ToDoList.Web.AutomatedTests\ToDoList.Web.AutomatedTests.csproj", "{00BB5939-5105-492C-A67E-85B428B0BF0A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F55320F2-2C80-4C62-81A5-ED9CE8A29453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Commons", "ToDoList.Commons\ToDoList.Commons.csproj", "{EC4B3662-FAEE-41FB-B399-2274D7CD04E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Commons", "ToDoList.Commons\ToDoList.Commons.csproj", "{EC4B3662-FAEE-41FB-B399-2274D7CD04E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Project.Data", "ToDoList.Project.Data\ToDoList.Project.Data.csproj", "{7F19A6E2-CD07-4417-9B22-B989250F009F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Project.Api.Tests", "ToDoList.Project.Api.Tests\ToDoList.Project.Api.Tests.csproj", "{33788262-7C4E-4567-B475-2EEF6C5EA6D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.ProjectManage.Api", "ToDoList.Project.Api\ToDoList.ProjectManage.Api.csproj", "{FB2B4956-4A48-47DA-97DC-581737648EF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.ProjectManage.ApiClient", "ToDoList.ProjectManage.ApiClient\ToDoList.ProjectManage.ApiClient.csproj", "{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +75,22 @@ Global
 		{EC4B3662-FAEE-41FB-B399-2274D7CD04E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC4B3662-FAEE-41FB-B399-2274D7CD04E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC4B3662-FAEE-41FB-B399-2274D7CD04E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F19A6E2-CD07-4417-9B22-B989250F009F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F19A6E2-CD07-4417-9B22-B989250F009F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F19A6E2-CD07-4417-9B22-B989250F009F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F19A6E2-CD07-4417-9B22-B989250F009F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33788262-7C4E-4567-B475-2EEF6C5EA6D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33788262-7C4E-4567-B475-2EEF6C5EA6D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33788262-7C4E-4567-B475-2EEF6C5EA6D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33788262-7C4E-4567-B475-2EEF6C5EA6D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB2B4956-4A48-47DA-97DC-581737648EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2B4956-4A48-47DA-97DC-581737648EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2B4956-4A48-47DA-97DC-581737648EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2B4956-4A48-47DA-97DC-581737648EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +101,10 @@ Global
 		{7DAC23D8-A1E2-4FF2-9C2C-89D9B6429B86} = {F55320F2-2C80-4C62-81A5-ED9CE8A29453}
 		{5ABE56DE-FFA0-4307-A83A-C09C19A46998} = {F55320F2-2C80-4C62-81A5-ED9CE8A29453}
 		{00BB5939-5105-492C-A67E-85B428B0BF0A} = {F55320F2-2C80-4C62-81A5-ED9CE8A29453}
+		{7F19A6E2-CD07-4417-9B22-B989250F009F} = {30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}
+		{33788262-7C4E-4567-B475-2EEF6C5EA6D3} = {30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}
+		{FB2B4956-4A48-47DA-97DC-581737648EF7} = {30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}
+		{E5F9E1D3-CCA0-4846-8FBA-BD25EB2B4E83} = {30B15EE3-E8A3-463B-A082-6D99BBF0BFE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C651D8D-3DCF-4BEF-9632-1715B2133654}

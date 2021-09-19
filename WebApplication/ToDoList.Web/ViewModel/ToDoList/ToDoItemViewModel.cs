@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ToDoList.Business.Models;
 using ToDoList.Data.Models.ToDoList;
+using ToDoList.Commons.Enums;
+using StatusName = ToDoList.Commons.Enums.StatusName;
 
 namespace ToDoList.Web.ViewModel.ToDoList
 {
@@ -51,12 +53,4 @@ namespace ToDoList.Web.ViewModel.ToDoList
         }
         
     }
-    public enum StatusName
-    {
-        Backlog,
-        Wip,
-        Done,
-        Archived
-    }
-
 }

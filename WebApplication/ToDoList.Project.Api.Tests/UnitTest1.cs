@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace ToDoList.Data.Tests
+namespace ToDoList.Project.Api.Tests
 {
     public class UnitTest1
     {
